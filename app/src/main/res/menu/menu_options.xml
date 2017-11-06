@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <group
+        android:checkableBehavior="single"
+        >
+        <item
+            android:id="@+id/option_japanese"
+            android:title="@string/japanese_fragment"
+            android:checked="true"
+            />
+        <item
+            android:id="@+id/option_vietnamese"
+            android:title="@string/vietnamese_fragment"
+            />
+        <item
+            android:id="@+id/option_thai"
+            android:title="@string/thai_fragment"
+            />
+        <item
+            android:id="@+id/option_korean"
+            android:title="@string/korean_fragment"
+            />
+        <item
+            android:id="@+id/option_chinese"
+            android:title="@string/chinese_fragment"
+            />
+    </group>
+
+    <item
+        android:title="@string/nav_extra"
+        >
+        <menu>
+            <item
+                android:id="@+id/option_favorite"
+                android:title="@string/option_favorite"
+                android:icon="@drawable/ic_favorite_white_24dp"
+                />
+            <item
+                android:id="@+id/option_share"
+                android:icon="@android:drawable/sym_action_email"
+                android:title="@string/option_share"
+
+                />
+        </menu>
+    </item>
+
+</menu>

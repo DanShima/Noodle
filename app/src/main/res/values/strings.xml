@@ -1,0 +1,23 @@
+<resources>
+    <string name="app_name">Noodles Adviser Stockholm</string>
+    <!--in DetailActivity-->
+    <string name="image">An example picture of the chosen noodles</string>
+
+    <!--Menu drawer options-->
+    <string name="toggle_drawer">Open the drawer</string>
+    <string name="toggle_off_drawer">Close the drawer</string>
+    <string name="nav_extra">Extra</string>
+    <string name="option_favorite">My favorites</string>
+    <string name="option_share">Share to ...</string>
+    <string name="japanese_fragment">Japanese noodles</string>
+    <string name="vietnamese_fragment">Vietnamese noodles</string>
+    <string name="thai_fragment">Thai noodles</string>
+    <string name="korean_fragment">Korean noodles</string>
+    <string name="chinese_fragment">Chinese noodles</string>
+    <string name="noodle">Noodles</string>
+    <string name="detail">Noodles detailed information</string>
+
+
+    <string name="favorite_btn">Save to My Favorites</string>
+
+</resources>
