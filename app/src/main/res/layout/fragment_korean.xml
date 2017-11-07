@@ -6,9 +6,10 @@
     tools:context="com.danshima.noodleapp.KoreanFragment">
 
 
-    <TextView
+    <ListView
+        android:id="@+id/korean_listView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/korean_fragment" />
+         />
 
 </LinearLayout>

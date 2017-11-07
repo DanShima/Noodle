@@ -2,6 +2,7 @@ package com.danshima.noodleapp;
 
 
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -9,6 +10,10 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ListView;
+import android.widget.SimpleCursorAdapter;
+
 
 import java.util.List;
 
@@ -17,21 +22,11 @@ import java.util.List;
  * A simple {@link Fragment} subclass.
  */
 public class JapaneseFragment extends Fragment {
-    private DatabaseHelper databaseHandler;
-    private SQLiteDatabase database;
-    private List<Noodle> myNoodleList;
-    private ListDataAdapter mDataAdapter;
-    private Cursor cursor;
-    View listView;
-    Context context;
 
-    public static JapaneseFragment newInstance() {
-        return new JapaneseFragment();
-    }
 
 
     public JapaneseFragment() {
-        // Required empty public constructor
+
     }
 
 
@@ -39,7 +34,13 @@ public class JapaneseFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        return inflater.inflate(R.layout.fragment_japanese, container, false);
+        View view = inflater.inflate(R.layout.activity_noodle, container, false);
+        ListView listView = view.findViewById(R.id.selected_noodleList);
+
+
+        return view;
 
     }
+
+
 }

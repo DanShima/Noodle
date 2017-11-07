@@ -26,28 +26,33 @@ public class NoodleActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+
+
+        DatabaseHelper databaseHelper = new DatabaseHelper(this);
         ListView noodleListPerCategory = findViewById(R.id.selected_noodleList);
-        SQLiteOpenHelper databaseHelper = new DatabaseHelper(this);
+
         try {
             database = databaseHelper.getReadableDatabase();
-            cursor = database.query("NOODLE", new String[]{"_id", "NAME"}, null, null, null, null, null);
+            fetch();
+
             //create the cursor adapter to fill the list view with values from the database
             SimpleCursorAdapter listAdapter = new SimpleCursorAdapter(this, android.R.layout.simple_list_item_1, cursor, new String[]{"NAME"},
-                    new int[]{android.R.id.text2}, 0);
+                    new int[]{android.R.id.text1}, 0);
             noodleListPerCategory.setAdapter(listAdapter);
         } catch (SQLiteException e) {
-            Toast toast = Toast.makeText(this, "Database error", Toast.LENGTH_SHORT);
+            //e.printStackTrace();
+            Toast toast = Toast.makeText(this, "Database is  not working!", Toast.LENGTH_SHORT);
             toast.show();
         }
 
         //show item detail using the listener when an item is clicked
         AdapterView.OnItemClickListener itemClickListener = new AdapterView.OnItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            public void onItemClick(AdapterView<?> noodleListPerCategory, View view, int position, long id) {
                 //starts DetailActivity
-                Intent intent = new Intent(NoodleActivity.this, DetailActivity.class);
-                intent.putExtra(DetailActivity.CHOSEN_NOODLE_ITEM, (int) id);
-                startActivity(intent);
+                //Intent intent = new Intent(NoodleActivity.this, DetailActivity.class);
+                //intent.putExtra(DetailActivity.CHOSEN_NOODLE_ITEM, (int) id);
+                //startActivity(intent);
             }
         };
         //connects the listener to the list view
@@ -64,6 +69,15 @@ public class NoodleActivity extends AppCompatActivity {
             cursor.close();
             database.close();
         }
+
+    public Cursor fetch() {
+        cursor = this.database.query("NOODLE", new String[]{"_id", "NAME"}, null, null, null, null, null);
+        if (cursor != null) {
+            cursor.moveToFirst();
+        }
+        return cursor;
+    }
+
 
 
 

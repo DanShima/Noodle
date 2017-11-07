@@ -28,7 +28,7 @@ public class DetailActivity extends AppCompatActivity {
         int noodleItem = (Integer) getIntent().getExtras().get(CHOSEN_NOODLE_ITEM);
 
         //create a cursor
-        SQLiteOpenHelper databaseHandler = new DatabaseHelper(this);
+        DatabaseHelper databaseHandler = new DatabaseHelper(this);
         try {
             SQLiteDatabase database = databaseHandler.getReadableDatabase();
             Cursor cursor = database.query("NOODLE", new String[] {"NAME", "DESCRIPTION", "IMAGEID", "RESTAURANT", "FAVORITE"},
@@ -65,7 +65,7 @@ public class DetailActivity extends AppCompatActivity {
             database.close();
         } catch(SQLiteException e) {
             //shows an error message to the user when db is not working
-            Toast toastError = Toast.makeText(this, "Database error", Toast.LENGTH_SHORT);
+            Toast toastError = Toast.makeText(this, "Database error!!", Toast.LENGTH_SHORT);
             toastError.show();
         }
     }
@@ -85,10 +85,15 @@ public class DetailActivity extends AppCompatActivity {
             database.update("NOODLE", noodleValues, "_id = ?", new String[] {Integer.toString(noodleItem)});
             database.close();
         } catch(SQLiteException e) {
-            Toast toastError = Toast.makeText(this, "Database error", Toast.LENGTH_SHORT);
+            Toast toastError = Toast.makeText(this, "Database error!!!", Toast.LENGTH_SHORT);
             toastError.show();
         }
     }
+
+
+
+
+
 
 
 

@@ -7,7 +7,7 @@ import java.util.List;
  * Created by Giddy on 05/11/2017.
  */
 
-public class Category {
+/*public class Category {
     private Noodle noodle;
     private List<Noodle> japaneseList;
     private List<Noodle> vietnameseList;
@@ -23,7 +23,7 @@ public class Category {
         thaiList = new ArrayList<>();
     }
 
-    public void addToANoodleList() {
+    /*public void addToANoodleList() {
         if (noodle.getCategory().equals("japanese")) {
             japaneseList.add(noodle);
         }
@@ -45,10 +45,11 @@ public class Category {
                 break;
             case "vietnamese":
                 vietnameseList.add(noodle);
-        }*/
+        }
 
 
     }
 
 
 }
+*/

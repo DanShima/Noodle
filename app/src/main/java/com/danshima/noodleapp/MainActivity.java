@@ -34,9 +34,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         //synchronize the icon to close or open
         //toggle.syncState(); <-- moved to a separate method
 
-
-
-
         //react to clicks on options in the drawer and calls onNavigationItemSelected
         NavigationView navigationView = findViewById(R.id.navigation_view);
         navigationView.setNavigationItemSelectedListener(this);
@@ -46,6 +43,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.add(R.id.content_frame, fragment);
         transaction.commit();
+
     }
 
     @Override
@@ -74,29 +72,36 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         return true;
     }
 
-    public void selectOption(MenuItem item){
+       public void selectOption(MenuItem item){
         //handle navigation view item clicks here
         int id = item.getItemId();
         Fragment fragment = null;
         Intent intent = null;
 
         switch(id) {
-           // case R.id.option_japanese:
-                //intent = new Intent(this, NoodleActivity.class);
+            case R.id.option_japanese:
+                intent = new Intent(MainActivity.this, NoodleActivity.class);
+                startActivity(intent);
+                break;
+                //return;
             case R.id.option_vietnamese:
-                fragment = new VietnameseFragment();
+                intent = new Intent(MainActivity.this, NoodleActivity.class);
+                startActivity(intent);
                 break;
             case R.id.option_thai:
-                fragment = new ThaiFragment();
+                intent = new Intent(MainActivity.this, NoodleActivity.class);
+                startActivity(intent);
                 break;
             case R.id.option_korean:
-                fragment = new KoreanFragment();
+                intent = new Intent(MainActivity.this, NoodleActivity.class);
+                startActivity(intent);
                 break;
             case R.id.option_chinese:
-                fragment = new ChineseFragment();
+                intent = new Intent(MainActivity.this, NoodleActivity.class);
+                startActivity(intent);
                 break;
             case R.id.option_favorite:
-                intent = new Intent(this, FavoriteActivity.class);
+                intent = new Intent(this, NoodleActivity.class);
                 break;
                 //for "share to" option
 
@@ -104,7 +109,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 //                break;
             default:
                 //intent = new Intent(this, NoodleActivity.class);
-                fragment = new JapaneseFragment();
+                //fragment = new JapaneseFragment();
+                intent = new Intent(MainActivity.this, NoodleActivity.class);
+                startActivity(intent);
         }
 
         if (fragment != null) {

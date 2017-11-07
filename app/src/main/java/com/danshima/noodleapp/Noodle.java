@@ -11,15 +11,15 @@ public class Noodle {
     private String description;
     private int photoID;
     private String suggestedRestaurant;
-    private String category;
 
 
-    protected Noodle(String name, String description, int photo, String restaurant, String category) {
+
+    protected Noodle(String name, String description, int photo, String restaurant) {
         this.name = name;
         this.description = description;
         this.photoID = photo;
         suggestedRestaurant = restaurant;
-        this.category = category;
+
     }
 
     public String getName() {
@@ -50,13 +50,9 @@ public class Noodle {
         return suggestedRestaurant;
     }
 
-    public String getCategory() {
-        return category;
-    }
 
-    public void setCategory(String category) {
-        this.category = category;
-    }
+
+
 
     /**
      *
