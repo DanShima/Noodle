@@ -75,30 +75,48 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
        public void selectOption(MenuItem item){
         //handle navigation view item clicks here
         int id = item.getItemId();
-        Fragment fragment = null;
+        //Fragment fragment = null;
+        Fragment fragment = new JapaneseFragment();
         Intent intent = null;
+        //create a bundle that holds information that can be retrieved from fragment
+        Bundle bundle = new Bundle();
 
+        //category numbers are 1)Japanese 2)Vietnamese 3)Thai 4)Korean 5)Chinese
         switch(id) {
             case R.id.option_japanese:
-                intent = new Intent(MainActivity.this, NoodleActivity.class);
-                startActivity(intent);
+                //fragment = new JapaneseFragment();
+                bundle.putInt("IDItem", 1);
+                fragment.setArguments(bundle);
+                //intent = new Intent(MainActivity.this, NoodleActivity.class);
+                //intent.putExtra("categoryItem",1);
+               // intent = new Intent(MainActivity.this, NoodleActivity.class);
+               // startActivity(intent);
                 break;
-                //return;
             case R.id.option_vietnamese:
-                intent = new Intent(MainActivity.this, NoodleActivity.class);
-                startActivity(intent);
+                //fragment = new JapaneseFragment();
+                bundle.putInt("IDItem", 2);
+                fragment.setArguments(bundle);
+                //intent = new Intent(MainActivity.this, NoodleActivity.class);
+                //intent.putExtra(NoodleActivity.CHOSEN_CATEGORY_ITEM, 2);
+                //startActivity(intent);
                 break;
             case R.id.option_thai:
-                intent = new Intent(MainActivity.this, NoodleActivity.class);
-                startActivity(intent);
+                bundle.putInt("IDItem", 3);
+                fragment.setArguments(bundle);
+                //intent = new Intent(MainActivity.this, NoodleActivity.class);
+                //startActivity(intent);
                 break;
             case R.id.option_korean:
-                intent = new Intent(MainActivity.this, NoodleActivity.class);
-                startActivity(intent);
+                bundle.putInt("IDItem", 4);
+                fragment.setArguments(bundle);
+                //intent = new Intent(MainActivity.this, NoodleActivity.class);
+                //startActivity(intent);
                 break;
             case R.id.option_chinese:
-                intent = new Intent(MainActivity.this, NoodleActivity.class);
-                startActivity(intent);
+                bundle.putInt("IDItem", 5);
+                fragment.setArguments(bundle);
+                //intent = new Intent(MainActivity.this, NoodleActivity.class);
+                //startActivity(intent);
                 break;
             case R.id.option_favorite:
                 intent = new Intent(this, NoodleActivity.class);

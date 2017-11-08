@@ -15,6 +15,7 @@ import android.widget.SimpleCursorAdapter;
 import android.widget.Toast;
 
 public class NoodleActivity extends AppCompatActivity {
+    public static final String CHOSEN_CATEGORY_ITEM = "categoryItem";
     private Cursor cursor;
     private SQLiteDatabase database;
 
@@ -41,7 +42,7 @@ public class NoodleActivity extends AppCompatActivity {
             noodleListPerCategory.setAdapter(listAdapter);
         } catch (SQLiteException e) {
             //e.printStackTrace();
-            Toast toast = Toast.makeText(this, "Database is  not working!", Toast.LENGTH_SHORT);
+            Toast toast = Toast.makeText(this, "Database is not working!", Toast.LENGTH_SHORT);
             toast.show();
         }
 
@@ -50,9 +51,9 @@ public class NoodleActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> noodleListPerCategory, View view, int position, long id) {
                 //starts DetailActivity
-                //Intent intent = new Intent(NoodleActivity.this, DetailActivity.class);
-                //intent.putExtra(DetailActivity.CHOSEN_NOODLE_ITEM, (int) id);
-                //startActivity(intent);
+                Intent intent = new Intent(NoodleActivity.this, DetailActivity.class);
+                intent.putExtra(DetailActivity.CHOSEN_NOODLE_ITEM, (int) id);
+                startActivity(intent);
             }
         };
         //connects the listener to the list view
@@ -71,10 +72,11 @@ public class NoodleActivity extends AppCompatActivity {
         }
 
     public Cursor fetch() {
-        cursor = this.database.query("NOODLE", new String[]{"_id", "NAME"}, null, null, null, null, null);
-        if (cursor != null) {
-            cursor.moveToFirst();
-        }
+        cursor = database.query("NOODLE", new String[]{"_id", "NAME"},
+                null, null, null, null, null);
+        //if (cursor != null) {
+        //    cursor.moveToFirst();
+        //}
         return cursor;
     }
 
