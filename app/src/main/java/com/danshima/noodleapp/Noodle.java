@@ -11,14 +11,16 @@ public class Noodle {
     private String description;
     private int photoID;
     private String suggestedRestaurant;
+    private int categoryNumber;
 
 
 
-    protected Noodle(String name, String description, int photo, String restaurant) {
+    protected Noodle(String name, String description, int photo, String suggestedRestaurant, int categoryNumber) {
         this.name = name;
         this.description = description;
         this.photoID = photo;
-        suggestedRestaurant = restaurant;
+        this.suggestedRestaurant = suggestedRestaurant;
+        this.categoryNumber = categoryNumber;
 
     }
 
@@ -30,6 +32,7 @@ public class Noodle {
         this.name = name;
     }
 
+
     public String getDescription() {
         return description;
     }
@@ -37,6 +40,7 @@ public class Noodle {
     public void setDescription(String description) {
         this.description = description;
     }
+
 
     public int getPhotoID() {
         return photoID;
@@ -50,12 +54,19 @@ public class Noodle {
         return suggestedRestaurant;
     }
 
+    public void setSuggestedRestaurant(String suggestedRestaurant) {
+        this.suggestedRestaurant = suggestedRestaurant;
+    }
 
+    public int getCategoryNumber() {
+        return categoryNumber;
+    }
 
-
+    public void setCategoryNumber(int categoryNumber) {
+        this.categoryNumber = categoryNumber;
+    }
 
     /**
-     *
      * @return the string representation of a noodle dish with its name
      */
     public String toString() {
