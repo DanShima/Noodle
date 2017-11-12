@@ -3,7 +3,9 @@ package com.danshima.noodleapp;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -24,6 +26,10 @@ public class FavoriteActivity extends AppCompatActivity {
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        //get a support Actionbar corresponding to this toolbar
+        ActionBar ab = getSupportActionBar();
+        //enables the Up button
+        ab.setDisplayHomeAsUpEnabled(true);
         showFavoriteList();
         populateFavoriteList();
 
@@ -35,10 +41,10 @@ public class FavoriteActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 //if the noodle option in the list view is clicked, start DetailActivity
-                if(position == 0){
+
                     Intent intent = new Intent(FavoriteActivity.this, DetailActivity.class);
                     startActivity(intent);
-                }
+
             }
         };
         //add the listener to the list view
@@ -48,7 +54,7 @@ public class FavoriteActivity extends AppCompatActivity {
 
     //populate the favorite_noodleList list view with user's favorite noodles.
     private void populateFavoriteList() {
-        ListView listFavorites = findViewById(R.id.favorite_noodleList);
+        ListView favoriteList = findViewById(R.id.favorite_noodleList);
         //get reference to the database
         SQLiteOpenHelper databaseHelper = new DatabaseHelper(this);
         database = databaseHelper.getReadableDatabase();
@@ -59,13 +65,15 @@ public class FavoriteActivity extends AppCompatActivity {
         CursorAdapter favoriteAdapter = new SimpleCursorAdapter(FavoriteActivity.this,
                 android.R.layout.simple_list_item_1, favoritesCursor, new String[] {"NAME"}, new int[] {android.R.id.text1}, 0);
         //set the cursor adapter to the list view
-        listFavorites.setAdapter(favoriteAdapter);
+        favoriteList.setAdapter(favoriteAdapter);
 
         //navigate to DetailActivity if a noodle is clicked
-        listFavorites.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        favoriteList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(FavoriteActivity.this, DetailActivity.class);
+                //need to include the ID of the noodle specifically!
+                intent.putExtra(DetailActivity.CHOSEN_NOODLE_ITEM, (int) id);
                 startActivity(intent);
             }
         });
@@ -78,14 +86,18 @@ public class FavoriteActivity extends AppCompatActivity {
     public void onRestart() {
         super.onRestart();
         //new favorites are not shown in the list. create a new cursor
-        Cursor newCursor = database.query("NOODLE", new String[] {"_id", "NAME"}, "FAVORIRTE = 1",
-                null, null, null, null);
-        //get reference to the list view's cursor adapter
-        ListView listFavorites = findViewById(R.id.favorite_noodleList);
-        CursorAdapter adapter = (CursorAdapter) listFavorites.getAdapter();
-        //change the current cursor to the new cursor
-        adapter.changeCursor(newCursor);
-        favoritesCursor = newCursor;
+       try {
+           Cursor newCursor = database.query("NOODLE", new String[]{"_id", "NAME"}, "FAVORITE = 1",
+                   null, null, null, null);
+           //get reference to the list view's cursor adapter
+           ListView listFavorites = findViewById(R.id.favorite_noodleList);
+           CursorAdapter adapter = (CursorAdapter) listFavorites.getAdapter();
+           //change the current cursor to the new cursor
+           adapter.changeCursor(newCursor);
+           favoritesCursor = newCursor;
+       } catch(SQLiteException e) {
+           e.printStackTrace();
+       }
 
     }
 

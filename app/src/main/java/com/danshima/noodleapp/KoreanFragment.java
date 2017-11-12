@@ -22,7 +22,7 @@ public class KoreanFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.activity_noodle, container, false);
+        View view = inflater.inflate(R.layout.fragment_korean, container, false);
 
         ListView list = view.findViewById(R.id.selected_noodleList);
         //Intent intent = new Intent(getActivity(), NoodleActivity.class);

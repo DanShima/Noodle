@@ -1,7 +1,9 @@
 package com.danshima.noodleapp;
 
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.content.ContentValues;
 import android.provider.SyncStateContract;
@@ -36,6 +38,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             + NOODLE_RESTAURANT_COLUMN + " text not null, "
             + "CATEGORY INTEGER);";
     private Noodle noodle;
+    SQLiteDatabase database;
 
 
     public DatabaseHelper(Context context) {
@@ -60,13 +63,15 @@ public class DatabaseHelper extends SQLiteOpenHelper {
      */
     @Override
     public void onUpgrade(SQLiteDatabase db, int currentVersion, int updatedVersion) {
+        //drop the old table and create a new one
+        db.execSQL("DROP TABLE IF EXISTS " + DATABASE_TABLE_ONE);
         updateDatabase(db, currentVersion, updatedVersion);
     }
 
     /**
      * This method is for adding new noodle dish to the SQLite database
      * @param database The SQLite database called "noodle"
-     * @param noodle a Noodle object     *
+     * @param noodle a Noodle object
      */
     private static void addNoodle(SQLiteDatabase database, Noodle noodle) {
         ContentValues noodleValues = new ContentValues();
@@ -100,14 +105,15 @@ public class DatabaseHelper extends SQLiteOpenHelper {
      * @param newVersion the new version written in the DatabaseHelper's code
      */
     private void updateDatabase(SQLiteDatabase db, int oldVersion, int newVersion) {
-        if (oldVersion >= 1) {
+        if (oldVersion < 1) {
             //execute SQL on the db and create a new NOODLE table
             db.execSQL(DATABASE_CREATE_NOODLE);
             populateNoodleDatabase(db);
-            if (oldVersion <= 2) {
-            }
+
+            db.execSQL("ALTER TABLE " + DATABASE_TABLE_ONE + " ADD COLUMN FAVORITE NUMERIC;");
         }
     }
+
 
     /**
      * This method populates the database with noodle dishes.
@@ -149,5 +155,24 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         addNoodle(db, new Noodle("Dandan Mian", "A spicy sauce containing preserved vegetables, chili oil, Sichuan pepper, minced pork, and scallions served over noodles",
                 R.drawable.spicydandan, "Waipo Stockholm\nDrottninggatan 25, 111 51 Stockholm", 5));
     }
+
+    public Cursor search(String input) throws SQLiteException {
+
+        String newQuery = "SELECT * FROM " + DATABASE_TABLE_ONE + " WHERE "
+                + NOODLE_NAME_COLUMN + " MATCH " + input + "';";
+        Cursor cursor = database.rawQuery(newQuery, null);
+        if(cursor != null){
+            cursor.moveToFirst();
+
+        }
+        return cursor;
+
+    }
+
+
+
+
+
+
 
 }
