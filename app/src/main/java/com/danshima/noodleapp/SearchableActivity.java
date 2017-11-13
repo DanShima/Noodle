@@ -22,7 +22,7 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
-public class SearchableActivity extends AppCompatActivity {
+public class SearchableActivity extends MenuActivity {
     private DatabaseHelper databaseHelper;
     private SQLiteDatabase database;
     private Cursor cursor;
@@ -48,10 +48,11 @@ public class SearchableActivity extends AppCompatActivity {
         handleIntent(getIntent());
     }
 
-    // Because this activity has set launchMode="singleTop", the system calls this method
-    // to deliver the intent if this activity is currently the foreground activity when
-    // invoked again (when the user executes a search from this activity, we don't create
-    // a new instance of this activity, so the system delivers the search intent here)
+    /**
+    * This method delivers the intent when the activity is invoked again.
+    * when the user executes a search from this activity, we don't create
+    * a new instance of this activity, because of launchMode="singleTop".=
+    * */
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
@@ -59,6 +60,10 @@ public class SearchableActivity extends AppCompatActivity {
         handleIntent(intent);
     }
 
+    /**
+     * This method decides what to do with the search request
+     * @param intent The search request made by the user
+     */
     private void handleIntent(Intent intent) {
         //if the activity was called to process a search request, do something with the search word/query
         try {
@@ -66,9 +71,7 @@ public class SearchableActivity extends AppCompatActivity {
             if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
                 //handles the search
                 String searchWord = intent.getStringExtra(SearchManager.QUERY);
-
                 showSearchResult(searchWord);
-
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -83,15 +86,12 @@ public class SearchableActivity extends AppCompatActivity {
         database = databaseHelper.getReadableDatabase();
         String []columns = {"_id", "NAME", "DESCRIPTION"};
         String selectionString = "NAME" + " LIKE '%" + input + "%' OR " + "DESCRIPTION" + " LIKE '%" + input + "%'";
-        cursor = database.query("NOODLE", columns, selectionString, null, null, null, null);
+        //sort the filtered list in alphabetical order
+        String orderBy = "NAME" + " ASC";
+        cursor = database.query("NOODLE", columns, selectionString, null, null, null, orderBy);
         if (cursor != null) {cursor.moveToFirst();}
         return cursor;
     }
-
-
-
-
-
 
 
     /**
@@ -123,36 +123,11 @@ public class SearchableActivity extends AppCompatActivity {
                 }
             });
         }
-
-
-
     }
 }
 
 
 
-        /*
-
-
-
-            //create a new cursor adapter
-            CursorAdapter adapter = new SimpleCursorAdapter(SearchableActivity.this,
-                    android.R.layout.simple_list_item_1, cursor, new String[] {"NAME"}, new int[] {android.R.id.text1}, 0);
-            //set the cursor adapter to the list view
-           resultList.setAdapter(adapter);
-
-            // Define the on-click listener for the list items
-            resultList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-
-                @Override
-                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    // Build the Intent used to open WordActivity with a specific word Uri
-                    Intent newIntent = new Intent(SearchableActivity.this, DetailActivity.class);
-                    startActivity(newIntent);
-                }
-            });
-        }
-    }*/
 
 
 

@@ -38,11 +38,6 @@
         android:textAppearance="?android:attr/textAppearanceMedium"
         />
 
-    <!--<TextView
-        android:id="@+id/category_number"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>-->
-
     <CheckBox
         android:id="@+id/add_to_favorite_btn"
         android:layout_width="wrap_content"

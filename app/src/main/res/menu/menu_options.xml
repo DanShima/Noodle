@@ -26,6 +26,7 @@
             android:id="@+id/option_chinese"
             android:title="@string/chinese_option"
             />
+
     </group>
 
     <item
@@ -37,12 +38,6 @@
                 android:id="@+id/option_favorite"
                 android:title="@string/option_favorite"
                 android:icon="@drawable/ic_favorite_white_24dp"
-                />
-            <item
-                android:id="@+id/option_share"
-                android:icon="@android:drawable/sym_action_email"
-                android:title="@string/option_share"
-
                 />
         </menu>
     </item>

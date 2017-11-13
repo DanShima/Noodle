@@ -9,11 +9,13 @@ import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.SearchView;
+import android.support.v7.widget.ShareActionProvider;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -21,8 +23,10 @@ import android.view.View;
 import android.widget.AdapterView;
 
 
-public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class MainActivity extends MenuActivity implements NavigationView.OnNavigationItemSelectedListener {
  private ActionBarDrawerToggle toggle;
+ private Intent shareIntent;
+ private ShareActionProvider share;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -132,18 +136,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 intent = new Intent(this, FavoriteActivity.class);
                 startActivity(intent);
                 break;
-                //TODO implement share and show something in the start page
-                //for "share to" option
-
-//                intent = new Intent(this, DetailActivity.class);
-//                break;
-            default:
-                //super.onOptionsItemSelected(item);
-                //intent = new Intent(this, NoodleActivity.class);
-                //fragment = new JapaneseFragment();
-                intent = new Intent(MainActivity.this, NoodleActivity.class);
-                intent.putExtra(DetailActivity.CHOSEN_NOODLE_ITEM, (int) id);
-                startActivity(intent);
         }
 
         if (fragment != null) {
@@ -158,53 +150,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     }
 
+
+
     /**
-     * This method enables menu option in the toolbar (in this case, the search option only)
-     * @param menu The menu option clicked by the user
-     * @return true if clicked
+     * This method closes the drawer when the Back button is clicked if it's open
      */
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        //inflate menu resource file
-        getMenuInflater().inflate(R.menu.menu_toolbar, menu);
-        //locate MenuItem with ShareActionProvider
-        MenuItem item = menu.findItem(R.id.action_search);
-        //use the searchManager to find the searchableInfo related to this activity
-        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
-        //connect the activity's SearchableInfo to the toolbar's search option
-        SearchView searchView = (SearchView) menu.findItem(R.id.action_search).getActionView();
-        SearchableInfo searchableInfo = searchManager.getSearchableInfo(getComponentName());
-
-        searchView.setSearchableInfo(searchableInfo);
-        //searchView.setIconifiedByDefault(false);
-        //display menu
-        return true;
-        //return super.onCreateOptionsMenu(menu);
-    }
-
-
-
-
-
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        if(item.getItemId() == R.id.action_search) {
-            onSearchRequested();
-        }
-        return true;
-
-        /*switch (item.getItemId()) {
-            case R.id.action_search:
-               onSearchRequested();
-                return true;
-            default:
-                return false;
-        }*/
-    }
-
-
-    //close the drawer when the Back button is clicked if it's open
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = findViewById(R.id.navigation_drawer);

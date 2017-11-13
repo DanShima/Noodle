@@ -4,28 +4,25 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.database.sqlite.SQLiteQueryBuilder;
-import android.provider.ContactsContract;
+import android.support.v4.app.NavUtils;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 import android.widget.ImageView;
+import android.support.v7.widget.ShareActionProvider;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.view.View;
 import android.widget.CheckBox;
 import android.content.ContentValues;
 
-public class DetailActivity extends AppCompatActivity {
+public class DetailActivity extends MenuActivity {
+    //the ID of the noodles that is used to get details of the noodle the user selected
     public static final String CHOSEN_NOODLE_ITEM = "noodleItem";
     private SQLiteOpenHelper databaseHelper;
     private SQLiteDatabase database;
     private Cursor cursor;
-
-
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,7 +34,6 @@ public class DetailActivity extends AppCompatActivity {
         ActionBar ab = getSupportActionBar();
         //enables the Up button
         ab.setDisplayHomeAsUpEnabled(true);
-
         //get the noodle from the intent
         int noodleItem = (Integer) getIntent().getExtras().get(CHOSEN_NOODLE_ITEM);
 
@@ -77,10 +73,6 @@ public class DetailActivity extends AppCompatActivity {
                 TextView restaurantNoodle = findViewById(R.id.restaurant_info);
                 restaurantNoodle.setText(restaurant);
 
-                //show category number
-                //TextView categoryNumber = findViewById(R.id.category_number);
-                //categoryNumber.setText(category);
-
 
                 //populate the favorite checkbox.
                 CheckBox favoriteBtn = findViewById(R.id.add_to_favorite_btn);
@@ -95,29 +87,17 @@ public class DetailActivity extends AppCompatActivity {
         }
     }
 
-    /*private void showFavoriteButton() {
-        int noodleItem = (Integer) getIntent().getExtras().get(CHOSEN_NOODLE_ITEM);
-        cursor = database.query("NOODLE", new String[]{"_id", "FAVORITE"},
-                null, null, null, null, null);
-        //if the favorite column has a value of 1, it means true
-        boolean isFavorite = (cursor.getInt(4) == 1);
-        CheckBox favorite = findViewById(R.id.add_to_favorite_btn);
-        favorite.setChecked(isFavorite);
-    }*/
 
-
-
-
-
-
-    //update the database when the checkbox is clicked
+    /**
+     * update the database when the checkbox is clicked
+     * @param view The "save to favorite" CheckBox
+     */
    public void saveFavorite(View view) {
         int noodleItem = (Integer) getIntent().getExtras().get(CHOSEN_NOODLE_ITEM);
         //Get the value of the checkbox
         CheckBox favorite = findViewById(R.id.add_to_favorite_btn);
         ContentValues noodleValues = new ContentValues();
         noodleValues.put("FAVORITE", favorite.isChecked());
-
 
         //Get a reference to the database and update the FAVORITE column
         databaseHelper = new DatabaseHelper(this);
@@ -131,6 +111,21 @@ public class DetailActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Need to override MenuActivity's onOptionsItemSelected method because the Up button otherwise doesn't work.
+     * @param item The MenuItem object that is the action on the toolbar that was clicked by the user
+     * @return true if clicked
+     */
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        super.onOptionsItemSelected(item);
+        switch(item.getItemId()) {
+            case android.R.id.home:
+                NavUtils.navigateUpFromSameTask(this);
+                break;
+        }
+        return true;
+    }
 
 
 

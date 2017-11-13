@@ -5,17 +5,19 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.support.v4.app.NavUtils;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.CursorAdapter;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 
-public class FavoriteActivity extends AppCompatActivity {
+public class FavoriteActivity extends MenuActivity {
     private Cursor favoritesCursor;
     private SQLiteDatabase database;
 
@@ -52,8 +54,10 @@ public class FavoriteActivity extends AppCompatActivity {
         listview.setOnItemClickListener(itemClickListener);
     }
 
-    //populate the favorite_noodleList list view with user's favorite noodles.
-    private void populateFavoriteList() {
+    /**
+     *  populate the favorite_noodleList list view with user's favorite noodles.
+     */
+     private void populateFavoriteList() {
         ListView favoriteList = findViewById(R.id.favorite_noodleList);
         //get reference to the database
         SQLiteOpenHelper databaseHelper = new DatabaseHelper(this);
@@ -80,8 +84,10 @@ public class FavoriteActivity extends AppCompatActivity {
     }
 
 
-    //this method is called when user goes back to FavoriteActivity after adding favorites.
-    //we need a new cursor because new added favorites are not shown while the current cursor is still active
+    /**
+     *  this method is called when user goes back to FavoriteActivity after adding favorites.
+     *we need a new cursor because new added favorites are not shown while the current cursor is still active
+     */
     @Override
     public void onRestart() {
         super.onRestart();
@@ -101,13 +107,31 @@ public class FavoriteActivity extends AppCompatActivity {
 
     }
 
-
-    //Close the cursor and database afterward
+    /**
+     * Close the cursor and database afterward
+     */
     @Override
     public void onDestroy(){
         super.onDestroy();
         favoritesCursor.close();
         database.close();
+    }
+
+
+    /**
+     * Need to override MenuActivity's onOptionsItemSelected method because the Up button otherwise doesn't work.
+     * @param item The MenuItem object that is the action on the toolbar that was clicked by the user
+     * @return true if clicked
+     */
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        super.onOptionsItemSelected(item);
+        switch(item.getItemId()) {
+            case android.R.id.home:
+                NavUtils.navigateUpFromSameTask(this);
+                break;
+        }
+        return true;
     }
 
 

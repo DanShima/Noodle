@@ -9,14 +9,17 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
+        <meta-data
+            android:name="android.app.default_searchable"
+            android:value=".SearchableActivity" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
-        </intent-filter>
-            <meta-data android:name="android.app.default_searchable"
-                android:value=".SearchableActivity"/>
+            </intent-filter>
+
+
         </activity>
         <activity android:name=".NoodleActivity" />
         <activity
@@ -25,16 +28,21 @@
         <activity
             android:name=".FavoriteActivity"
             android:parentActivityName=".MainActivity" />
-        <activity android:name=".SearchableActivity"
+        <activity
+            android:name=".SearchableActivity"
             android:label="Element search"
             android:launchMode="singleTop">
             <intent-filter>
                 <action android:name="android.intent.action.SEARCH" />
-                <category android:name="android.intent.category.DEFAULT"/>
+
+                <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
-            <meta-data android:name="android.app.searchable"
-                android:resource="@xml/searchable"/>
+
+            <meta-data
+                android:name="android.app.searchable"
+                android:resource="@xml/searchable" />
         </activity>
+        <activity android:name=".MenuActivity"></activity>
     </application>
 
 </manifest>
