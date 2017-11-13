@@ -43,7 +43,7 @@ public class NoodleActivity extends AppCompatActivity {
                     new int[]{android.R.id.text1}, 0);
             noodleListPerCategory.setAdapter(listAdapter);
         } catch (SQLiteException e) {
-            //e.printStackTrace();
+            e.printStackTrace();
             Toast toast = Toast.makeText(this, "Database is not working!", Toast.LENGTH_SHORT);
             toast.show();
         }

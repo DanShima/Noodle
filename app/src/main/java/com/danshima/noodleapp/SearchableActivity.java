@@ -10,7 +10,9 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.CursorAdapter;
@@ -24,8 +26,8 @@ public class SearchableActivity extends AppCompatActivity {
     private DatabaseHelper databaseHelper;
     private SQLiteDatabase database;
     private Cursor cursor;
-    ListView resultList;
-    private static String QUERY_EXTRA_KEY = "QUERY_EXTRA_KEY";
+    private ListView resultList;
+
     private SimpleCursorAdapter adapter;
 
 
@@ -33,6 +35,10 @@ public class SearchableActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_searchable);
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+
         resultList = findViewById(R.id.search_result_list);
         // Create a new adapter and bind it to the List View
        // adapter = new SimpleCursorAdapter(this, android.R.layout.simple_list_item_1, cursor, new String[]{"NAME"},
@@ -89,13 +95,15 @@ public class SearchableActivity extends AppCompatActivity {
 
 
     /**
-     * Searches the dictionary and displays results for the given query.
-     *
+     * This method displays results for the given query in the designated list view.
      * @param query The search query
      */
     private void showSearchResult(String query) {
-        searchInDatabase(query);
-
+            searchInDatabase(query);
+        if (cursor == null) {
+            Toast toast = Toast.makeText(this, "No result found", Toast.LENGTH_SHORT);
+            toast.show();
+        } else {
             resultList = findViewById(R.id.search_result_list);
             //create a new cursor adapter
             CursorAdapter adapter = new SimpleCursorAdapter(SearchableActivity.this,
@@ -110,9 +118,11 @@ public class SearchableActivity extends AppCompatActivity {
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                     // Build the Intent used to open WordActivity with a specific word Uri
                     Intent newIntent = new Intent(SearchableActivity.this, DetailActivity.class);
+                    newIntent.putExtra(DetailActivity.CHOSEN_NOODLE_ITEM, (int) id);
                     startActivity(newIntent);
                 }
             });
+        }
 
 
 
@@ -123,13 +133,8 @@ public class SearchableActivity extends AppCompatActivity {
 
         /*
 
-        Cursor cursor = database.query("NOODLE", new String[] {"NAME", "DESCRIPTION", "RESTAURANT"},
-                "_id = ?", new String[] {query}, null, null,null);
 
-        if (cursor == null) {
-            Toast toast = Toast.makeText(this, "No result found", Toast.LENGTH_SHORT);
-            toast.show();
-        } else {
+
             //create a new cursor adapter
             CursorAdapter adapter = new SimpleCursorAdapter(SearchableActivity.this,
                     android.R.layout.simple_list_item_1, cursor, new String[] {"NAME"}, new int[] {android.R.id.text1}, 0);
