@@ -1,7 +1,7 @@
 package com.danshima.noodleapp;
 
 
-import android.content.Context;
+
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -16,20 +16,16 @@ import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 import android.widget.Toast;
 
-
-import java.util.List;
-
-
 /**
- * A simple {@link Fragment} subclass.
+ * A subclass displayed in the main page that shows a list of noodle per category. 
  */
-public class JapaneseFragment extends Fragment {
+public class CategoryFragment extends Fragment {
     private Cursor cursor;
     private SQLiteDatabase database;
     //public static final String CHOSEN_CATEGORY_ITEM = "categoryItem";
 
 
-    public JapaneseFragment() {
+    public CategoryFragment() {
 
     }
 

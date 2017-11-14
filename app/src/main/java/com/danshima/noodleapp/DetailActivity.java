@@ -10,7 +10,6 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.widget.ImageView;
-import android.support.v7.widget.ShareActionProvider;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.view.View;
@@ -34,9 +33,12 @@ public class DetailActivity extends MenuActivity {
         ActionBar ab = getSupportActionBar();
         //enables the Up button
         ab.setDisplayHomeAsUpEnabled(true);
+        populateNoodleDetails();
+    }
+
+    private void populateNoodleDetails() {
         //get the noodle from the intent
         int noodleItem = (Integer) getIntent().getExtras().get(CHOSEN_NOODLE_ITEM);
-
         //create a cursor
         databaseHelper = new DatabaseHelper(this);
         try {
@@ -50,7 +52,7 @@ public class DetailActivity extends MenuActivity {
                 String description = cursor.getString(1);
                 int image = cursor.getInt(2);
                 String restaurant = cursor.getString(3);
-                //int category = cursor.getInt(4);
+                // 1 for checked, and 0 for unchecked in the favorite checkbox
                 boolean isFavorite = (cursor.getInt(4) == 1);
 
                 //populate the noodle name
@@ -68,11 +70,9 @@ public class DetailActivity extends MenuActivity {
                 //the description value in db becomes the description of the noodle
                 descriptionNoodle.setText(description);
 
-
                 //populate the restaurant info
                 TextView restaurantNoodle = findViewById(R.id.restaurant_info);
                 restaurantNoodle.setText(restaurant);
-
 
                 //populate the favorite checkbox.
                 CheckBox favoriteBtn = findViewById(R.id.add_to_favorite_btn);
@@ -81,15 +81,16 @@ public class DetailActivity extends MenuActivity {
 
         } catch(SQLiteException e) {
             e.printStackTrace();
-            //shows an error message to the user when db is not working
             Toast toastError = Toast.makeText(this, "Database error!!", Toast.LENGTH_SHORT);
             toastError.show();
         }
+
     }
 
 
+
     /**
-     * update the database when the checkbox is clicked
+     * update the column favorite in the database when the checkbox is clicked
      * @param view The "save to favorite" CheckBox
      */
    public void saveFavorite(View view) {
@@ -112,7 +113,7 @@ public class DetailActivity extends MenuActivity {
     }
 
     /**
-     * Need to override MenuActivity's onOptionsItemSelected method because the Up button otherwise doesn't work.
+     * Need to override MenuActivity's onOptionsItemSelected method because the Up button doesn't work otherwise.
      * @param item The MenuItem object that is the action on the toolbar that was clicked by the user
      * @return true if clicked
      */

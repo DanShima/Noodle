@@ -5,7 +5,6 @@ import android.app.SearchableInfo;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v4.view.MenuItemCompat;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.SearchView;
@@ -54,10 +53,15 @@ public class MenuActivity extends AppCompatActivity {
     }
 
     private void setShareIntent(String text) {
+       // Uri picture = Uri.parse("file://my_picture");
         Intent shareIntent = new Intent();
         shareIntent.setAction(Intent.ACTION_SEND);
         shareIntent.putExtra(Intent.EXTRA_TEXT, text);
-        shareIntent.setType("text/plain");
+        //shareIntent.putExtra(Intent.EXTRA_STREAM, picture);
+        //shareIntent.setType("text/plain");
+        //shareIntent.setType("image/*");
+       // shareIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+       // startActivity(Intent.createChooser(shareIntent, "Share images..."));
         share.setShareIntent(shareIntent);
 
     }

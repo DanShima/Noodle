@@ -4,9 +4,6 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
-import android.database.sqlite.SQLiteOpenHelper;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -16,7 +13,7 @@ import android.widget.SimpleCursorAdapter;
 import android.widget.Toast;
 
 public class NoodleActivity extends MenuActivity {
-    public static final String CHOSEN_CATEGORY_ITEM = "categoryItem";
+    //public static final String CHOSEN_CATEGORY_ITEM = "categoryItem";
     private Cursor cursor;
     private SQLiteDatabase database;
 
@@ -28,15 +25,13 @@ public class NoodleActivity extends MenuActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-
-
-
+        //fetch data from the database
         DatabaseHelper databaseHelper = new DatabaseHelper(this);
         ListView noodleListPerCategory = findViewById(R.id.selected_noodleList);
 
         try {
             database = databaseHelper.getReadableDatabase();
-            fetch();
+            databaseHelper.getName();
 
             //create the cursor adapter to fill the list view with values from the database
             SimpleCursorAdapter listAdapter = new SimpleCursorAdapter(this, android.R.layout.simple_list_item_1, cursor, new String[]{"NAME"},
@@ -72,22 +67,6 @@ public class NoodleActivity extends MenuActivity {
             cursor.close();
             database.close();
         }
-
-    public Cursor fetch() {
-        cursor = database.query("NOODLE", new String[]{"_id", "NAME"},
-                null, null, null, null, null);
-        //if (cursor != null) {
-        //    cursor.moveToFirst();
-        //}
-        return cursor;
-    }
-
-
-
-
-
-
-
 
     }
 

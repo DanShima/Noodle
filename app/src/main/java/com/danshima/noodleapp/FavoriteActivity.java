@@ -4,10 +4,8 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
-import android.database.sqlite.SQLiteOpenHelper;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
@@ -37,16 +35,16 @@ public class FavoriteActivity extends MenuActivity {
 
     }
 
+    /**
+     * This method is called when the user clicks on an item in the favorite list and directs the user to the detailed noodle page.
+     */
     private void showFavoriteList() {
-        //add an OnItemClickListener
         AdapterView.OnItemClickListener itemClickListener = new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 //if the noodle option in the list view is clicked, start DetailActivity
-
                     Intent intent = new Intent(FavoriteActivity.this, DetailActivity.class);
                     startActivity(intent);
-
             }
         };
         //add the listener to the list view
@@ -60,17 +58,18 @@ public class FavoriteActivity extends MenuActivity {
      private void populateFavoriteList() {
         ListView favoriteList = findViewById(R.id.favorite_noodleList);
         //get reference to the database
-        SQLiteOpenHelper databaseHelper = new DatabaseHelper(this);
+        DatabaseHelper databaseHelper = new DatabaseHelper(this);
         database = databaseHelper.getReadableDatabase();
         //create a cursor that gets the values of the _id and NAME columns when FAVORITE = 1
         favoritesCursor = database.query("NOODLE", new String[] {"_id", "NAME"}, "FAVORITE = 1",
-        null, null, null, null);
+       null, null, null, null);
+
+
         //create a new cursor adapter
-        CursorAdapter favoriteAdapter = new SimpleCursorAdapter(FavoriteActivity.this,
+         SimpleCursorAdapter favoriteAdapter = new SimpleCursorAdapter(FavoriteActivity.this,
                 android.R.layout.simple_list_item_1, favoritesCursor, new String[] {"NAME"}, new int[] {android.R.id.text1}, 0);
         //set the cursor adapter to the list view
         favoriteList.setAdapter(favoriteAdapter);
-
         //navigate to DetailActivity if a noodle is clicked
         favoriteList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -133,9 +132,6 @@ public class FavoriteActivity extends MenuActivity {
         }
         return true;
     }
-
-
-
 
 
 }

@@ -1,17 +1,11 @@
 package com.danshima.noodleapp;
 
-import android.app.ListActivity;
-import android.app.LoaderManager;
+
 import android.app.SearchManager;
-import android.content.CursorLoader;
 import android.content.Intent;
-import android.content.Loader;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteException;
 import android.os.Bundle;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.AdapterView;
@@ -20,7 +14,6 @@ import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 import android.widget.Toast;
 
-import java.util.ArrayList;
 
 public class SearchableActivity extends MenuActivity {
     private DatabaseHelper databaseHelper;
@@ -28,7 +21,6 @@ public class SearchableActivity extends MenuActivity {
     private Cursor cursor;
     private ListView resultList;
 
-    private SimpleCursorAdapter adapter;
 
 
     @Override
@@ -38,13 +30,7 @@ public class SearchableActivity extends MenuActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-
         resultList = findViewById(R.id.search_result_list);
-        // Create a new adapter and bind it to the List View
-       // adapter = new SimpleCursorAdapter(this, android.R.layout.simple_list_item_1, cursor, new String[]{"NAME"},
-                //new int[]{android.R.id.text1}, 0);
-       // resultList.setAdapter(adapter);
-
         handleIntent(getIntent());
     }
 
@@ -80,6 +66,11 @@ public class SearchableActivity extends MenuActivity {
         }
     }
 
+    /**
+     * This method searches in the database to match the input given by the user.
+     * @param input The search word or description input from the user
+     * @return Cursor the cursor for finding the relevant information
+     */
 
     public Cursor searchInDatabase(String input) {
         databaseHelper = new DatabaseHelper(this);

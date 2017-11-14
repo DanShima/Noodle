@@ -3,10 +3,9 @@ package com.danshima.noodleapp;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.content.ContentValues;
-import android.provider.SyncStateContract;
+
 
 
 /**
@@ -38,7 +37,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             + NOODLE_RESTAURANT_COLUMN + " text not null, "
             + "CATEGORY INTEGER);";
     private Noodle noodle;
-    SQLiteDatabase database;
+    private SQLiteDatabase database;
+    private Cursor cursor;
 
 
     public DatabaseHelper(Context context) {
@@ -156,19 +156,23 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 R.drawable.spicydandan, "Waipo Stockholm\nDrottninggatan 25, 111 51 Stockholm", 5));
     }
 
-    public Cursor search(String input) throws SQLiteException {
 
-        String newQuery = "SELECT * FROM " + DATABASE_TABLE_ONE + " WHERE "
-                + NOODLE_NAME_COLUMN + " MATCH " + input + "';";
-        Cursor cursor = database.rawQuery(newQuery, null);
-        if(cursor != null){
-            cursor.moveToFirst();
-
-        }
+    public Cursor getFavorite() {
+        cursor = database.query("NOODLE", new String[] {"_id", "NAME"}, "FAVORITE = 1",
+                null, null, null, null);
         return cursor;
-
     }
 
+    /**
+     * This method fetches names of the noodles from the database
+     * @return cursor that finds the specific info inside the database
+     */
+
+    public Cursor getName() {
+        cursor = database.query("NOODLE", new String[]{"_id", "NAME"},
+                null, null, null, null, null);
+        return cursor;
+    }
 
 
 

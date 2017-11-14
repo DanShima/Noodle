@@ -3,6 +3,7 @@ package com.danshima.noodleapp;
 
 
 /**
+ * The noodle class defines a single noodle dish with its attributes
  * Created by Giddy on 04/11/2017.
  */
 

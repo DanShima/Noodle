@@ -1,26 +1,17 @@
 package com.danshima.noodleapp;
 
-import android.app.SearchManager;
-import android.app.SearchableInfo;
-import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
-import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.SearchView;
 import android.support.v7.widget.ShareActionProvider;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.AdapterView;
 
 
 public class MainActivity extends MenuActivity implements NavigationView.OnNavigationItemSelectedListener {
@@ -58,7 +49,7 @@ public class MainActivity extends MenuActivity implements NavigationView.OnNavig
         navigationView.setNavigationItemSelectedListener(this);
 
         //shows the content of the fragment in MainActivity's frame layout
-        Fragment fragment = new JapaneseFragment();
+        Fragment fragment = new CategoryFragment();
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.add(R.id.content_frame, fragment);
         transaction.commit();
@@ -104,7 +95,7 @@ public class MainActivity extends MenuActivity implements NavigationView.OnNavig
         //handle navigation view item clicks here
         int id = item.getItemId();
         //Fragment fragment = null;
-        Fragment fragment = new JapaneseFragment();
+        Fragment fragment = new CategoryFragment();
         Intent intent = null;
         //create a bundle that holds information that can be retrieved from fragment
         Bundle bundle = new Bundle();
