@@ -1,6 +1,8 @@
 package com.danshima.noodleapp;
 
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  * The noodle class defines a single noodle dish with its attributes
@@ -13,6 +15,7 @@ public class Noodle {
     private int photoID;
     private String suggestedRestaurant;
     private int categoryNumber;
+    private Date visitDate;
 
 
 
@@ -23,6 +26,17 @@ public class Noodle {
         this.suggestedRestaurant = suggestedRestaurant;
         this.categoryNumber = categoryNumber;
 
+    }
+
+    //to initialize a simpler, user version of noodle
+    protected Noodle(String name, Date date){
+        this.name = name;
+        this.visitDate = date;
+    }
+
+    //to initialize a version of noodle for the single-line log entries
+    protected Noodle(String name) {
+        this(name, new Date(java.lang.System.currentTimeMillis()));
     }
 
     public String getName() {
@@ -67,11 +81,19 @@ public class Noodle {
         this.categoryNumber = categoryNumber;
     }
 
+    public Date getDate(){
+        return visitDate;
+    }
+
     /**
-     * @return the string representation of a noodle dish with its name
+     * @return the string representation of a noodle dish (the user log version)
      */
     public String toString() {
-        return this.name;
+        SimpleDateFormat date = new SimpleDateFormat("dd/MM/yy");
+        String dateString = date.format(visitDate);
+        return "(" + dateString + ") " + name;
     }
+
+
 }
 

@@ -39,6 +39,11 @@
                 android:title="@string/option_favorite"
                 android:icon="@drawable/ic_favorite_white_24dp"
                 />
+            <item
+                android:id="@+id/option_newList"
+                android:title="@string/option_log"
+                android:icon="@android:drawable/ic_input_add"
+                />
         </menu>
     </item>
 

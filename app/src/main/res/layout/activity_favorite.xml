@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context="com.danshima.noodleapp.NoodleActivity"
+    android:background="@drawable/illustration"
     >
     <include
         android:id="@+id/toolbar"

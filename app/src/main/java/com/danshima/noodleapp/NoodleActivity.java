@@ -13,7 +13,6 @@ import android.widget.SimpleCursorAdapter;
 import android.widget.Toast;
 
 public class NoodleActivity extends MenuActivity {
-    //public static final String CHOSEN_CATEGORY_ITEM = "categoryItem";
     private Cursor cursor;
     private SQLiteDatabase database;
 

@@ -17,40 +17,34 @@ import android.widget.SimpleCursorAdapter;
 import android.widget.Toast;
 
 /**
- * A subclass displayed in the main page that shows a list of noodle per category. 
+ * A subclass displayed in the main page that shows a list of noodle per category.
  */
 public class CategoryFragment extends Fragment {
     private Cursor cursor;
     private SQLiteDatabase database;
-    //public static final String CHOSEN_CATEGORY_ITEM = "categoryItem";
 
-
-    public CategoryFragment() {
-
-    }
-
+    public CategoryFragment() {}
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        View view = inflater.inflate(R.layout.fragment_japanese, container, false);
-        ListView noodleListPerCategory = view.findViewById(R.id.japanese_noodleList);
+        View view = inflater.inflate(R.layout.fragment_category, container, false);
+        ListView noodleListPerCategory = view.findViewById(R.id.category_noodleList);
 
 
         DatabaseHelper databaseHelper = new DatabaseHelper(getContext());
-        //ListView noodleListPerCategory = (ListView) findViewById(R.id.japanese_noodleList);
 
         try {
             database = databaseHelper.getReadableDatabase();
-            fetch(1);
+            fetchCategory();
 
             //create the cursor adapter to fill the list view with values from the database
             SimpleCursorAdapter listAdapter = new SimpleCursorAdapter(getContext(), android.R.layout.simple_list_item_1, cursor, new String[]{"NAME"},
                     new int[]{android.R.id.text1}, 0);
             noodleListPerCategory.setAdapter(listAdapter);
         } catch (SQLiteException e) {
-            //e.printStackTrace();
+            e.printStackTrace();
             Toast toast = Toast.makeText(getContext(), "Database is not working!", Toast.LENGTH_SHORT);
             toast.show();
         }
@@ -81,18 +75,23 @@ public class CategoryFragment extends Fragment {
         database.close();
     }
 
-    public Cursor fetch(int categoryID) {
+    /**
+     * This method gets data from the category column in the database
+     * @param
+     * @return The cursor used to perform database query
+     */
+
+    public Cursor fetchCategory() {
+        //the Integer value stored in the category column in the database
         int iID = 0;
+        //we use a bundle to store the data
         Bundle bundle = this.getArguments();
         if (bundle != null) {
-            iID = bundle.getInt("IDItem", 3);
+            iID = bundle.getInt("IDItem", 1);
         }
         String selectQuery = "SELECT * FROM NOODLE WHERE CATEGORY=" + iID;
-        //String selectQuery = "SELECT * FROM NOODLE WHERE CATEGORY=" + categoryID;
         cursor = database.rawQuery(selectQuery, null);
 
-        //cursor = database.query("NOODLE", new String[]{"_id", "NAME"},
-        // null, null, null, null, null);
         if (cursor != null) {
             cursor.moveToFirst();
         }

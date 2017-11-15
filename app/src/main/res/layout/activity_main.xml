@@ -7,18 +7,15 @@
     android:layout_height="match_parent"
     >
     <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:gravity="bottom|end"
-        >
-
-        <TextView
-            android:layout_width="204dp"
-            android:layout_height="138dp"
-            android:text="@string/introduction_main"
-            android:textStyle="bold" />
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <ImageView xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/illustration"
+            android:scaleType="centerCrop"
+            />
     </LinearLayout>
-
     <!--the first part of the drawer that shows the content-->
     <LinearLayout
         android:layout_width="match_parent"

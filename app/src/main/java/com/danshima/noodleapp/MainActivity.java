@@ -9,15 +9,12 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.os.Bundle;
-import android.support.v7.widget.ShareActionProvider;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
 
 public class MainActivity extends MenuActivity implements NavigationView.OnNavigationItemSelectedListener {
  private ActionBarDrawerToggle toggle;
- private Intent shareIntent;
- private ShareActionProvider share;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,7 +39,6 @@ public class MainActivity extends MenuActivity implements NavigationView.OnNavig
         //add the toggle to the drawer layout
         menuDrawer.addDrawerListener(toggle);
         //synchronize the icon to close or open
-        //toggle.syncState(); <-- moved to a separate method
 
         //react to clicks on options in the drawer and calls onNavigationItemSelected
         NavigationView navigationView = findViewById(R.id.navigation_view);
@@ -54,9 +50,6 @@ public class MainActivity extends MenuActivity implements NavigationView.OnNavig
         transaction.add(R.id.content_frame, fragment);
         transaction.commit();
     }
-
-
-
 
 
     @Override
@@ -71,7 +64,6 @@ public class MainActivity extends MenuActivity implements NavigationView.OnNavig
         super.onConfigurationChanged(config);
         // Pass any configuration change to the drawer toggles
        toggle.onConfigurationChanged(config);
-
     }
 
     /**
@@ -94,15 +86,14 @@ public class MainActivity extends MenuActivity implements NavigationView.OnNavig
        private void selectOption(MenuItem item){
         //handle navigation view item clicks here
         int id = item.getItemId();
-        //Fragment fragment = null;
         Fragment fragment = new CategoryFragment();
         Intent intent = null;
         //create a bundle that holds information that can be retrieved from fragment
         Bundle bundle = new Bundle();
 
-        //category numbers are 1)Japanese 2)Vietnamese 3)Thai 4)Korean 5)Chinese
+        //first parameter for bundle is the key of the bundle
+       // category numbers are 1)Japanese 2)Vietnamese 3)Thai 4)Korean 5)Chinese
         switch(id) {
-            //case R.id.action_search:
             case R.id.option_japanese:
                 bundle.putInt("IDItem", 1);
                 fragment.setArguments(bundle);
@@ -127,6 +118,9 @@ public class MainActivity extends MenuActivity implements NavigationView.OnNavig
                 intent = new Intent(this, FavoriteActivity.class);
                 startActivity(intent);
                 break;
+            case R.id.option_newList:
+                intent = new Intent(this, LogActivity.class);
+                startActivity(intent);
         }
 
         if (fragment != null) {
@@ -135,10 +129,8 @@ public class MainActivity extends MenuActivity implements NavigationView.OnNavig
         } else {
             startActivity(intent);
         }
-
         DrawerLayout drawer = findViewById(R.id.navigation_drawer);
         drawer.closeDrawer(GravityCompat.START);
-
     }
 
 

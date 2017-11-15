@@ -36,6 +36,9 @@ public class DetailActivity extends MenuActivity {
         populateNoodleDetails();
     }
 
+    /**
+     * This method fetches data from the SQLite database and connects the data to the view.
+     */
     private void populateNoodleDetails() {
         //get the noodle from the intent
         int noodleItem = (Integer) getIntent().getExtras().get(CHOSEN_NOODLE_ITEM);
@@ -45,49 +48,47 @@ public class DetailActivity extends MenuActivity {
             database = databaseHelper.getReadableDatabase();
             cursor = database.query("NOODLE", new String[] {"NAME", "DESCRIPTION", "IMAGEID", "RESTAURANT", "FAVORITE"},
                     "_id = ?", new String[] {Integer.toString(noodleItem)}, null, null, null);
-            //move to the first row in the Cursor
-            if(cursor.moveToFirst()) {
-                //get details from the cursor
-                String name = cursor.getString(0);
-                String description = cursor.getString(1);
-                int image = cursor.getInt(2);
-                String restaurant = cursor.getString(3);
-                // 1 for checked, and 0 for unchecked in the favorite checkbox
-                boolean isFavorite = (cursor.getInt(4) == 1);
-
-                //populate the noodle name
-                TextView nameNoodle = findViewById(R.id.name_info);
-                //the value stored in the database becomes the name of the noodle
-                nameNoodle.setText(name);
-
-                //populate the noodle image
-                ImageView imageNoodle = findViewById(R.id.image_info);
-                imageNoodle.setImageResource(image);
-                imageNoodle.setContentDescription(name);
-
-                //populate the noodle description
-                TextView descriptionNoodle = findViewById(R.id.description_info);
-                //the description value in db becomes the description of the noodle
-                descriptionNoodle.setText(description);
-
-                //populate the restaurant info
-                TextView restaurantNoodle = findViewById(R.id.restaurant_info);
-                restaurantNoodle.setText(restaurant);
-
-                //populate the favorite checkbox.
-                CheckBox favoriteBtn = findViewById(R.id.add_to_favorite_btn);
-                favoriteBtn.setChecked(isFavorite);
-            }
 
         } catch(SQLiteException e) {
             e.printStackTrace();
             Toast toastError = Toast.makeText(this, "Database error!!", Toast.LENGTH_SHORT);
             toastError.show();
         }
+        //move to the first row in the Cursor
+        if(cursor.moveToFirst()) {
+            //get details from the cursor
+            String name = cursor.getString(0);
+            String description = cursor.getString(1);
+            int image = cursor.getInt(2);
+            String restaurant = cursor.getString(3);
+            // 1 for checked, and 0 for unchecked in the favorite checkbox
+            boolean isFavorite = (cursor.getInt(4) == 1);
+
+            //populate the noodle name
+            TextView nameNoodle = findViewById(R.id.name_info);
+            //the value stored in the database becomes the name of the noodle
+            nameNoodle.setText(name);
+
+            //populate the noodle image
+            ImageView imageNoodle = findViewById(R.id.image_info);
+            imageNoodle.setImageResource(image);
+            imageNoodle.setContentDescription(name);
+
+            //populate the noodle description
+            TextView descriptionNoodle = findViewById(R.id.description_info);
+            //the description value in db becomes the description of the noodle
+            descriptionNoodle.setText(description);
+
+            //populate the restaurant info
+            TextView restaurantNoodle = findViewById(R.id.restaurant_info);
+            restaurantNoodle.setText(restaurant);
+
+            //populate the favorite checkbox.
+            CheckBox favoriteBtn = findViewById(R.id.add_to_favorite_btn);
+            favoriteBtn.setChecked(isFavorite);
+        }
 
     }
-
-
 
     /**
      * update the column favorite in the database when the checkbox is clicked
@@ -105,7 +106,7 @@ public class DetailActivity extends MenuActivity {
         try{
             database = databaseHelper.getWritableDatabase();
             database.update("NOODLE", noodleValues, "_id = ?", new String[] {Integer.toString(noodleItem)});
-            //database.close();
+
         } catch(SQLiteException e) {
             Toast toastError = Toast.makeText(this, "Database error!!!", Toast.LENGTH_SHORT);
             toastError.show();
@@ -127,13 +128,5 @@ public class DetailActivity extends MenuActivity {
         }
         return true;
     }
-
-
-
-
-
-
-
-
 
 }

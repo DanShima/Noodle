@@ -13,6 +13,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.support.v7.widget.ShareActionProvider;
 
+
+
 public class MenuActivity extends AppCompatActivity {
  ShareActionProvider share;
     @Override
@@ -20,7 +22,6 @@ public class MenuActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
     }
 
     /**
@@ -33,9 +34,6 @@ public class MenuActivity extends AppCompatActivity {
         //inflate menu resource file
         getMenuInflater().inflate(R.menu.menu_toolbar, menu);
 
-
-        //locate MenuItem with ShareActionProvider
-
         //use the searchManager to find the searchableInfo related to this activity
         SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
         //connect the activity's SearchableInfo to the toolbar's search option
@@ -46,26 +44,23 @@ public class MenuActivity extends AppCompatActivity {
         MenuItem item = menu.findItem(R.id.option_share);
         //fetch reference to the share action provider
         share = (ShareActionProvider) MenuItemCompat.getActionProvider(item);
-        setShareIntent("This seems like a nice dish to try...");
-        //searchView.setIconifiedByDefault(false);
+        setShareIntent();
+
         //display menu
         return super.onCreateOptionsMenu(menu);
     }
 
-    private void setShareIntent(String text) {
-       // Uri picture = Uri.parse("file://my_picture");
+    /**
+     * This method starts simple sharing process to other texting apps.
+     * It doesn't share any content of the app.
+     */
+    private void setShareIntent() {
         Intent shareIntent = new Intent();
         shareIntent.setAction(Intent.ACTION_SEND);
-        shareIntent.putExtra(Intent.EXTRA_TEXT, text);
-        //shareIntent.putExtra(Intent.EXTRA_STREAM, picture);
-        //shareIntent.setType("text/plain");
-        //shareIntent.setType("image/*");
-       // shareIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-       // startActivity(Intent.createChooser(shareIntent, "Share images..."));
+        shareIntent.putExtra(Intent.EXTRA_TEXT, "Wanna eat out with me tonight?");
+        shareIntent.setType("text/plain");
         share.setShareIntent(shareIntent);
-
     }
-
 
 
     /**
@@ -77,9 +72,6 @@ public class MenuActivity extends AppCompatActivity {
         if(item.getItemId() == R.id.action_search) {
             onSearchRequested();
         }
-        //if(item.getItemId() == R.id.option_share) {
-
-        // }
         return true;
     }
 }

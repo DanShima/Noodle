@@ -3,6 +3,7 @@ package com.danshima.noodleapp;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.content.ContentValues;
 
@@ -16,26 +17,27 @@ import android.content.ContentValues;
 public class DatabaseHelper extends SQLiteOpenHelper {
 
     //the name for the database
-    public static final String DATABASENAME = "NoodleDB";
+    private static final String DATABASENAME = "NoodleDB";
     //the initial version of the database
-    public static final int DATABASEVERSION = 1;
-    public static final String DATABASE_TABLE_ONE = "NOODLE";
+    private static final int DATABASEVERSION = 1;
+    private static final String DATABASE_TABLE_ONE = "NOODLE";
 
     //the index column name for use in where clauses;
-    public static final String KEY_ID_NOODLE = "_id";
+    private static final String KEY_ID_NOODLE = "_id";
     //the names for some columns in the noodle database
-    public static final String NOODLE_NAME_COLUMN = "NAME";
-    public static final String NOODLE_DESCRIPTION_COLUMN = "DESCRIPTION";
-    public static final String NOODLE_RESTAURANT_COLUMN = "RESTAURANT";
+    private static final String NOODLE_NAME_COLUMN = "NAME";
+    private static final String NOODLE_DESCRIPTION_COLUMN = "DESCRIPTION";
+    private static final String NOODLE_RESTAURANT_COLUMN = "RESTAURANT";
 
-    //SQL statement to create a new database.
-    public static final String DATABASE_CREATE_NOODLE = "create table " + DATABASE_TABLE_ONE + " ("
+    //SQL statement to create a new Noodle database.
+    private static final String DATABASE_CREATE_NOODLE = "create table " + DATABASE_TABLE_ONE + " ("
             + KEY_ID_NOODLE + " integer primary key autoincrement, "
             + NOODLE_NAME_COLUMN + " text not null, "
             + NOODLE_DESCRIPTION_COLUMN + " text not null, "
             + "IMAGEID INTEGER, "
             + NOODLE_RESTAURANT_COLUMN + " text not null, "
             + "CATEGORY INTEGER);";
+
     private Noodle noodle;
     private SQLiteDatabase database;
     private Cursor cursor;
@@ -52,6 +54,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         updateDatabase(db, 0, DATABASEVERSION);
+
     }
 
     /**
@@ -73,30 +76,19 @@ public class DatabaseHelper extends SQLiteOpenHelper {
      * @param database The SQLite database called "noodle"
      * @param noodle a Noodle object
      */
-    private static void addNoodle(SQLiteDatabase database, Noodle noodle) {
+    public void addNoodle(SQLiteDatabase database, Noodle noodle) {
         ContentValues noodleValues = new ContentValues();
         noodleValues.put(NOODLE_NAME_COLUMN, noodle.getName());
         noodleValues.put(NOODLE_DESCRIPTION_COLUMN, noodle.getDescription());
         noodleValues.put("IMAGEID", noodle.getPhotoID());
         noodleValues.put(NOODLE_RESTAURANT_COLUMN, noodle.getSuggestedRestaurant());
         noodleValues.put("CATEGORY", noodle.getCategoryNumber());
-
-        database.insert(DATABASE_TABLE_ONE, null, noodleValues);
-        //database.close();
+        try {
+            database.insert(DATABASE_TABLE_ONE, null, noodleValues);
+        } catch(SQLiteException e){
+            e.printStackTrace();
+        }
     }
-
-
-    //just to test one hard coded noodle dish
-    private void addNoodleTest(SQLiteDatabase db) {
-        ContentValues noodleValues = new ContentValues();
-        noodleValues.put(NOODLE_NAME_COLUMN, "Spicy Ramen");
-        noodleValues.put(NOODLE_DESCRIPTION_COLUMN, "Chicken broth, marinated pork, chilli and bean sprouts");
-        noodleValues.put("IMAGEID", R.drawable.spicyramen);
-        noodleValues.put(NOODLE_RESTAURANT_COLUMN, "TOTEMO");
-        noodleValues.put("CATEGORY", 1);
-        db.insert(DATABASE_TABLE_ONE, null, noodleValues);
-    }
-
 
     /**
      * This method creates the noodle database including data resources
@@ -109,7 +101,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             //execute SQL on the db and create a new NOODLE table
             db.execSQL(DATABASE_CREATE_NOODLE);
             populateNoodleDatabase(db);
-
             db.execSQL("ALTER TABLE " + DATABASE_TABLE_ONE + " ADD COLUMN FAVORITE NUMERIC;");
         }
     }
@@ -156,13 +147,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 R.drawable.spicydandan, "Waipo Stockholm\nDrottninggatan 25, 111 51 Stockholm", 5));
     }
 
-
-    public Cursor getFavorite() {
-        cursor = database.query("NOODLE", new String[] {"_id", "NAME"}, "FAVORITE = 1",
-                null, null, null, null);
-        return cursor;
-    }
-
     /**
      * This method fetches names of the noodles from the database
      * @return cursor that finds the specific info inside the database
@@ -173,10 +157,4 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 null, null, null, null, null);
         return cursor;
     }
-
-
-
-
-
-
 }

@@ -25,6 +25,7 @@ public class FavoriteActivity extends MenuActivity {
         setContentView(R.layout.activity_favorite);
 
         Toolbar toolbar = findViewById(R.id.toolbar);
+        toolbar.setTitle("My Favorites");
         setSupportActionBar(toolbar);
         //get a support Actionbar corresponding to this toolbar
         ActionBar ab = getSupportActionBar();
