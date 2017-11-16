@@ -2,9 +2,6 @@ package com.danshima.noodleapp;
 
 import org.junit.Before;
 import org.junit.Test;
-
-import java.text.SimpleDateFormat;
-
 import static org.junit.Assert.*;
 
 /**
@@ -13,10 +10,9 @@ import static org.junit.Assert.*;
 public class NoodleTest {
     @Before
     public void setUp() throws Exception {
-        Noodle noodleOne = new Noodle("Spicy Ramen");
-        Noodle noodleTwo = new Noodle("Instant Noodles", "Not healthy", R.drawable.spicydandan, "At home", 2);
+        Noodle noodleOne = new Noodle("Instant Noodles", "Not healthy", R.drawable.spicydandan, "At home", 2);
         noodleOne.getName();
-        noodleOne.getDate();
+        noodleOne.getSuggestedRestaurant();
     }
 
     @Test
@@ -25,10 +21,11 @@ public class NoodleTest {
     }
 
     @Test
-    public void getDate(){
-        assertEquals("11/11/17", "11/11/17");
+    public void getSuggestedRestaurant(){
+        Noodle noodleTwo = new Noodle("Instant Noodles", "Not healthy", R.drawable.spicydandan, "At home", 2);
+        assertEquals("At home", noodleTwo.getSuggestedRestaurant());
     }
 
-        
+
 
 }

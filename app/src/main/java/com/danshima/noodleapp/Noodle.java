@@ -15,7 +15,6 @@ public class Noodle {
     private int photoID;
     private String suggestedRestaurant;
     private int categoryNumber;
-    private Date visitDate;
 
 
 
@@ -26,17 +25,6 @@ public class Noodle {
         this.suggestedRestaurant = suggestedRestaurant;
         this.categoryNumber = categoryNumber;
 
-    }
-
-    //to initialize a simpler, user version of noodle
-    protected Noodle(String name, Date date){
-        this.name = name;
-        this.visitDate = date;
-    }
-
-    //to initialize a version of noodle for the single-line log entries
-    protected Noodle(String name) {
-        this(name, new Date(java.lang.System.currentTimeMillis()));
     }
 
     public String getName() {
@@ -79,19 +67,6 @@ public class Noodle {
 
     public void setCategoryNumber(int categoryNumber) {
         this.categoryNumber = categoryNumber;
-    }
-
-    public Date getDate(){
-        return visitDate;
-    }
-
-    /**
-     * @return the string representation of a noodle dish (the user log version)
-     */
-    public String toString() {
-        SimpleDateFormat date = new SimpleDateFormat("dd/MM/yy");
-        String dateString = date.format(visitDate);
-        return "(" + dateString + ") " + name;
     }
 
 

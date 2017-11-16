@@ -3,7 +3,7 @@
     <string name="introduction_main">Hi! This app will show you different types of noodles and where you can eat them in downtown Stockholm. Browse and enjoy~ ^_^</string>
     <!--in DetailActivity-->
     <string name="image">An example picture of the chosen noodles</string>
-
+    <string name="favorite_btn">Save to My Favorites</string>
     <!--Menu drawer options-->
     <string name="action_search">Search for a noodle dish</string>
     <string name="toggle_drawer">Open the drawer</string>
@@ -21,11 +21,10 @@
     <string name="detail">Noodles detailed information</string>
 
 
-    <string name="favorite_btn">Save to My Favorites</string>
+    <string name="add_entry">Add</string>
 
-    <string name="search_hint">Search by description</string>
+    <string name="search_hint">Search by name or description</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+
 
 </resources>

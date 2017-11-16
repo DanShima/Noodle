@@ -1,24 +1,34 @@
 package com.danshima.noodleapp;
 
+import android.app.Activity;
+import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.KeyEvent;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.Toast;
+
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * This activity class allows user to quickly note down their experience or a noodle dish they have tried.
- *
- */
+ * */
 
 
 public class LogActivity extends MenuActivity {
+    private UserLog log;
     private ArrayAdapter<String> adapter;
     private ArrayList<String> experiences;
-
+    private static final String SHARED_PREFS_NAME = "MY_SHARED_PREF";
 
 
     @Override
@@ -30,46 +40,113 @@ public class LogActivity extends MenuActivity {
         toolbar.setTitle("My List");
         setSupportActionBar(toolbar);
 
+        //get references to layout widgets
+        Button button = findViewById(R.id.add_to_log);
+        ListView listView = findViewById(R.id.newLog);
+
         experiences = new ArrayList<>();
+        experiences = getArray();
+        //create an array adapter that connects the array to the list view
+        adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, experiences);
 
-        final EditText enterLog = findViewById(R.id.enterLog);
-        //when user enters something into the editText view
-        enterLog.setOnKeyListener(new View.OnKeyListener() {
-                                      //click actions add the contents of the editText widgets to the arrayList
-                                      public boolean onKey(View v, int keyCode, KeyEvent event) {
-                                          if (event.getAction() == KeyEvent.ACTION_DOWN)
-                                              //and he presses enter
-                                              if (keyCode == KeyEvent.KEYCODE_ENTER) {
-                                                  String input = enterLog.getText().toString();
-                                                  //if he didn't enter any words, then nothing happens
-                                                  if (input.length() == 0) {
-                                                      return true;
-                                                  }
-                                                  Noodle newNoodle = new Noodle(input);
-                                                  input = newNoodle.toString();
-                                                  experiences.add(0, input);
-                                                  enterLog.setText("");
-                                                  return true;
-                                              }
-                                          return false;
-                                      }
-                                  });
 
-                ListView listView = findViewById(R.id.newLog);
-                //create an array adapter that connects the array to the list view
-                adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, experiences);
-                //now the adapter is connected to the list view
-                listView.setAdapter(adapter);
+        //enable listener so user input is registered when the button is clicked
+       Button.OnClickListener listener = new Button.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                EditText enterLog = findViewById(R.id.enterLog);
+                String input = enterLog.getText().toString();
+                //if the user doesn't enter any text, a toast will be shown
+               if (input.length() == 0) {
+                   Toast toastError = Toast.makeText(LogActivity.this, "Write something!", Toast.LENGTH_SHORT);
+                   toastError.show();
+               } else {
+                try{
+                    //add the new experience to the arrayList
+                    addExperience(input);
+                    enterLog.setText("");
+                }catch(Exception e){
+                    e.printStackTrace();
+                    Toast toastError = Toast.makeText(LogActivity.this, "Cannot be added", Toast.LENGTH_SHORT);
+                    toastError.show();
+                }
+            }}
+        };
+        button.setOnClickListener(listener);
+        listView.setAdapter(adapter);
+        listView.setDividerHeight(3);
 
+        listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view,
+                                           int position, long arg) {
+
+                removeLog(position);
+                return false;
+            }
+        });
     }
 
+    /**
+     * This method stores the data in the arrayList "experiences" through Shared Preferences,
+     * as it otherwise disappears when you close the app or go to another activity.
+     * @return true if stored in an editor object
+     */
 
-    public void addLog(String log) {
-        Noodle newNoodle = new Noodle(log);
-        log = newNoodle.toString();
-        experiences.add(log);
+
+    public boolean saveArray() {
+        //enter key and mode(the file can only be accessed using calling app)
+        SharedPreferences sp = this.getSharedPreferences(SHARED_PREFS_NAME, Activity.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sp.edit();
+        Set<String> set = new HashSet<>();
+        set.addAll(experiences);
+        editor.putStringSet("list", set);
+        return editor.commit();
+    }
+
+    /**
+     * This method retrieves the data stored through SharedPreferences.
+     * @return the stored ArrayList
+     */
+
+    public ArrayList<String> getArray() {
+        SharedPreferences sp = this.getSharedPreferences(SHARED_PREFS_NAME, Activity.MODE_PRIVATE);
+        //if shared preference is null, the method return empty Hashset and not null
+        Set<String> set = sp.getStringSet("list", new HashSet<String>());
+        return new ArrayList<>(set);
+    }
+
+    /**
+     * When the activity stops, saveArray() is called to do its work so no data is lost
+     */
+    public void onStop() {
+        saveArray();
+        super.onStop();
+    }
+
+    /**
+     * This method adds a new experience or log (user input) to the ArrayList
+     * @param newExp the experience/text entered
+     */
+    public void addExperience(String newExp) {
+        //convert the UserLog object into string for the arrayList
+        log = new UserLog(newExp);
+        newExp = log.toString();
+        experiences.add(0, newExp);
         adapter.notifyDataSetChanged();
+    }
 
+    /**
+     * This method removes an entry from the log list if the user long clicks it.
+     *  @param position the index of the entry
+     *  */
+
+
+    public void removeLog(int position) {
+        String log = experiences.get(position);
+        experiences.remove(log);
+        adapter.notifyDataSetChanged();
     }
 
 }

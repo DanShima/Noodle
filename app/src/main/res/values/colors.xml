@@ -3,4 +3,7 @@
     <color name="colorPrimary">#875a72</color>
     <color name="colorPrimaryDark">#603f51</color>
     <color name="colorAccent">#FF4081</color>
+    <color name="listView_background">#e3c8c7c8</color>
+    <color name="listView_listSelector">#beac9da9</color>
+    <color name="color_button">#9e8190</color>
 </resources>
