@@ -12,6 +12,7 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashSet;
 import java.util.Set;
@@ -108,7 +109,10 @@ public class LogActivity extends MenuActivity {
         SharedPreferences sp = this.getSharedPreferences(SHARED_PREFS_NAME, Activity.MODE_PRIVATE);
         //if shared preference is null, the method return empty Hashset and not null
         Set<String> set = sp.getStringSet("list", new HashSet<String>());
-        return new ArrayList<>(set).sort(Comparator.<String>naturalOrder());
+        //HashSet gives us an unsorted arraylist so we need to sort it again before returning it.
+        experiences = new ArrayList<>(set);
+        Collections.sort(experiences);
+        return experiences;
     }
 
     /**
