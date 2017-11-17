@@ -3,6 +3,9 @@ package com.danshima.noodleapp;
 import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.KeyEvent;
@@ -12,6 +15,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.SimpleCursorAdapter;
 import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
@@ -29,6 +33,9 @@ public class LogActivity extends MenuActivity {
     private ArrayAdapter<String> adapter;
     private ArrayList<String> experiences;
     private static final String SHARED_PREFS_NAME = "MY_SHARED_PREF";
+    private LogController logController;
+    private SQLiteDatabase database;
+    private Cursor cursor;
 
 
     @Override
@@ -42,13 +49,14 @@ public class LogActivity extends MenuActivity {
 
         //get references to layout widgets
         Button button = findViewById(R.id.add_to_log);
-        ListView listView = findViewById(R.id.newLog);
+        final ListView listView = findViewById(R.id.newLog);
 
-        experiences = new ArrayList<>();
-        experiences = getArray();
+       // experiences = new ArrayList<>();
+       // experiences = getArray();
         //create an array adapter that connects the array to the list view
-        adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, experiences);
-
+       // adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, experiences);
+        logController = new LogController(this);
+        database = logController.getWritableDatabase();
 
         //enable listener so user input is registered when the button is clicked
        Button.OnClickListener listener = new Button.OnClickListener() {
@@ -62,9 +70,15 @@ public class LogActivity extends MenuActivity {
                    toastError.show();
                } else {
                 try{
+                    input = "hallo";
                     //add the new experience to the arrayList
-                    addExperience(input);
+                    //addLog(input);
+                    logController.addLog(input);
                     enterLog.setText("");
+                    SimpleCursorAdapter listAdapter = new SimpleCursorAdapter(LogActivity.this, android.R.layout.simple_list_item_1, cursor, new String[]{LogController.LOG_COLUMN},
+                            new int[]{android.R.id.text1}, 0);
+                    listView.setAdapter(listAdapter);
+                    //listView.setDividerHeight(3);
                 }catch(Exception e){
                     e.printStackTrace();
                     Toast toastError = Toast.makeText(LogActivity.this, "Cannot be added", Toast.LENGTH_SHORT);
@@ -73,8 +87,8 @@ public class LogActivity extends MenuActivity {
             }}
         };
         button.setOnClickListener(listener);
-        listView.setAdapter(adapter);
-        listView.setDividerHeight(3);
+        //create the cursor adapter to fill the list view with values from the database
+
 
         listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
 
@@ -82,7 +96,8 @@ public class LogActivity extends MenuActivity {
             public boolean onItemLongClick(AdapterView<?> parent, View view,
                                            int position, long arg) {
 
-                removeLog(position);
+                //removeLog(position);
+                logController.removeLog(position);
                 return false;
             }
         });
@@ -95,7 +110,7 @@ public class LogActivity extends MenuActivity {
      */
 
 
-    public boolean saveArray() {
+   /* public boolean saveArray() {
         //enter key and mode(the file can only be accessed using calling app)
         SharedPreferences sp = this.getSharedPreferences(SHARED_PREFS_NAME, Activity.MODE_PRIVATE);
         SharedPreferences.Editor editor = sp.edit();
@@ -110,26 +125,28 @@ public class LogActivity extends MenuActivity {
      * @return the stored ArrayList
      */
 
-    public ArrayList<String> getArray() {
+   /* public ArrayList<String> getArray() {
         SharedPreferences sp = this.getSharedPreferences(SHARED_PREFS_NAME, Activity.MODE_PRIVATE);
         //if shared preference is null, the method return empty Hashset and not null
         Set<String> set = sp.getStringSet("list", new HashSet<String>());
         return new ArrayList<>(set);
-    }
+    }*/
 
     /**
      * When the activity stops, saveArray() is called to do its work so no data is lost
      */
-    public void onStop() {
-        saveArray();
-        super.onStop();
+    public void onDestroy() {
+        cursor.close();
+        database.close();
+        //saveArray();
+        super.onDestroy();
     }
 
     /**
      * This method adds a new experience or log (user input) to the ArrayList
      * @param newExp the experience/text entered
      */
-    public void addExperience(String newExp) {
+   /* public void addExperience(String newExp) {
         //convert the UserLog object into string for the arrayList
         log = new UserLog(newExp);
         newExp = log.toString();
@@ -141,12 +158,10 @@ public class LogActivity extends MenuActivity {
      * This method removes an entry from the log list if the user long clicks it.
      *  @param position the index of the entry
      *  */
-
-
-    public void removeLog(int position) {
+   /* public void removeLog(int position) {
         String log = experiences.get(position);
         experiences.remove(log);
         adapter.notifyDataSetChanged();
-    }
+    }*/
 
 }
