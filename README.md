@@ -19,6 +19,8 @@ The idea is to make an android application which shows different types of noodle
 - The user can share to others through email/message (no database
   content).
 
+![User Diagram](https://drive.google.com/file/d/1W9b0rPFRgfAJ9J0NG3jqlxixf1NgHikM/view?usp=sharing)
+
 >**Implementation:**
 After finalizing my idea, design and UI on sketch, I gathered all resource files (images, descriptions etc)
 Then I made a base model with Noodle.class, Category.class (arraylists), Log.class and Main and tried them out in Terminal. But fairly quickly, I decided to move on to Android Studio to create layouts and views.
