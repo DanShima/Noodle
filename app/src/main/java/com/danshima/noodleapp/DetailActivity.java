@@ -94,7 +94,7 @@ public class DetailActivity extends MenuActivity {
      * update the column favorite in the database when the checkbox is clicked
      * @param view The "save to favorite" CheckBox
      */
-   public void saveFavorite(View view) {
+   protected void saveFavorite(View view) {
         int noodleItem = (Integer) getIntent().getExtras().get(CHOSEN_NOODLE_ITEM);
         //Get the value of the checkbox
         CheckBox favorite = findViewById(R.id.add_to_favorite_btn);

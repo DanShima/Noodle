@@ -91,7 +91,7 @@ public class LogActivity extends MenuActivity {
      * as it otherwise disappears when you close the app or go to another activity.
      * @return true if stored in an editor object
      */
-   public boolean saveArray() {
+   private boolean saveArray() {
         //enter key and mode(the file can only be accessed using calling app)
         SharedPreferences sp = this.getSharedPreferences(SHARED_PREFS_NAME, Activity.MODE_PRIVATE);
         SharedPreferences.Editor editor = sp.edit();
@@ -105,7 +105,7 @@ public class LogActivity extends MenuActivity {
      * This method retrieves the data stored through SharedPreferences.
      * @return the stored ArrayList
      */
-   public ArrayList<String> getArray() {
+   private ArrayList<String> getArray() {
         SharedPreferences sp = this.getSharedPreferences(SHARED_PREFS_NAME, Activity.MODE_PRIVATE);
         //if shared preference is null, the method return empty Hashset and not null
         Set<String> set = sp.getStringSet("list", new HashSet<String>());

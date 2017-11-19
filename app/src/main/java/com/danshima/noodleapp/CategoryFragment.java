@@ -80,7 +80,7 @@ public class CategoryFragment extends Fragment {
      * @param
      * @return The cursor used to perform database query
      */
-    public Cursor fetchCategory() {
+    protected Cursor fetchCategory() {
         //the Integer value stored in the category column in the database
         int iID = 0;
         //we use a bundle to store the data

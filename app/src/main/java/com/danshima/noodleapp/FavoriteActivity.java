@@ -89,7 +89,7 @@ public class FavoriteActivity extends MenuActivity {
      *we need a new cursor because new added favorites are not shown while the current cursor is still active
      */
     @Override
-    public void onRestart() {
+    protected void onRestart() {
         super.onRestart();
         //new favorites are not shown in the list. create a new cursor
        try {

@@ -152,7 +152,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
      * @return cursor that finds the specific info inside the database
      */
 
-    public Cursor getName() {
+    protected Cursor getName() {
         cursor = database.query("NOODLE", new String[]{"_id", "NAME"},
                 null, null, null, null, null);
         return cursor;
