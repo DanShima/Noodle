@@ -151,8 +151,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
      * This method fetches names of the noodles from the database
      * @return cursor that finds the specific info inside the database
      */
-
-    protected Cursor getName() {
+    public Cursor getName() {
         cursor = database.query("NOODLE", new String[]{"_id", "NAME"},
                 null, null, null, null, null);
         return cursor;

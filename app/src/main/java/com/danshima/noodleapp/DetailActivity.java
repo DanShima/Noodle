@@ -19,9 +19,16 @@ import android.content.ContentValues;
 public class DetailActivity extends MenuActivity {
     //the ID of the noodles that is used to get details of the noodle the user selected
     public static final String CHOSEN_NOODLE_ITEM = "noodleItem";
-    private SQLiteOpenHelper databaseHelper;
+    private DatabaseHelper databaseHelper;
     private SQLiteDatabase database;
     private Cursor cursor;
+    private boolean isFavorite;
+
+    //get the noodle that was selected from the intent
+    public int getNoodleItemID(){
+        int noodleItem = (Integer) getIntent().getExtras().get(CHOSEN_NOODLE_ITEM);
+        return noodleItem;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,14 +47,12 @@ public class DetailActivity extends MenuActivity {
      * This method fetches data from the SQLite database and connects the data to the view.
      */
     private void populateNoodleDetails() {
-        //get the noodle from the intent
-        int noodleItem = (Integer) getIntent().getExtras().get(CHOSEN_NOODLE_ITEM);
         //create a cursor
         databaseHelper = new DatabaseHelper(this);
         try {
             database = databaseHelper.getReadableDatabase();
             cursor = database.query("NOODLE", new String[] {"NAME", "DESCRIPTION", "IMAGEID", "RESTAURANT", "FAVORITE"},
-                    "_id = ?", new String[] {Integer.toString(noodleItem)}, null, null, null);
+                    "_id = ?", new String[] {Integer.toString(getNoodleItemID())}, null, null, null);
 
         } catch(SQLiteException e) {
             e.printStackTrace();
@@ -87,7 +92,6 @@ public class DetailActivity extends MenuActivity {
             CheckBox favoriteBtn = findViewById(R.id.add_to_favorite_btn);
             favoriteBtn.setChecked(isFavorite);
         }
-
     }
 
     /**
@@ -95,18 +99,16 @@ public class DetailActivity extends MenuActivity {
      * @param view The "save to favorite" CheckBox
      */
    protected void saveFavorite(View view) {
-        int noodleItem = (Integer) getIntent().getExtras().get(CHOSEN_NOODLE_ITEM);
         //Get the value of the checkbox
         CheckBox favorite = findViewById(R.id.add_to_favorite_btn);
+        boolean isFavorite = favorite.isChecked();
         ContentValues noodleValues = new ContentValues();
-        noodleValues.put("FAVORITE", favorite.isChecked());
-
+        noodleValues.put("FAVORITE", isFavorite);
         //Get a reference to the database and update the FAVORITE column
         databaseHelper = new DatabaseHelper(this);
         try{
             database = databaseHelper.getWritableDatabase();
-            database.update("NOODLE", noodleValues, "_id = ?", new String[] {Integer.toString(noodleItem)});
-
+           database.update("NOODLE", noodleValues, "_id = ?", new String[] {Integer.toString(getNoodleItemID())});
         } catch(SQLiteException e) {
             Toast toastError = Toast.makeText(this, "Database error!!!", Toast.LENGTH_SHORT);
             toastError.show();
@@ -128,5 +130,4 @@ public class DetailActivity extends MenuActivity {
         }
         return true;
     }
-
 }
