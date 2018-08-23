@@ -3,24 +3,23 @@ package com.danshima.noodleapp
 import android.content.Intent
 import android.content.res.Configuration
 import android.support.design.widget.NavigationView
-import android.support.v4.app.Fragment
-import android.support.v4.app.FragmentTransaction
 import android.support.v4.view.GravityCompat
 import android.support.v4.widget.DrawerLayout
 import android.support.v7.app.ActionBarDrawerToggle
 import android.os.Bundle
 import android.support.v7.widget.Toolbar
 import android.view.MenuItem
+import kotlinx.android.synthetic.main.activity_main.*
 
 
 class MainActivity : MenuActivity(), NavigationView.OnNavigationItemSelectedListener {
-    private var toggle: ActionBarDrawerToggle? = null
+    private lateinit var toggle: ActionBarDrawerToggle
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         showNavigationDrawer()
-
+        startMainFragment()
     }
 
     /**
@@ -29,20 +28,13 @@ class MainActivity : MenuActivity(), NavigationView.OnNavigationItemSelectedList
     private fun showNavigationDrawer() {
         val toolbar = findViewById<Toolbar>(R.id.toolbar)
         setSupportActionBar(toolbar)
-        //find the drawer view
-        val menuDrawer = findViewById<DrawerLayout>(R.id.navigation_drawer)
-        //add a drawer toggle for opening the navigation drawer. param: current activity, drawer layout, toolbar, string resources for open and close
         toggle = ActionBarDrawerToggle(
-            this, menuDrawer, toolbar, R.string.toggle_drawer, R.string.toggle_off_drawer)
-        //add the toggle to the drawer layout
-        menuDrawer.addDrawerListener(toggle!!)
-        //synchronize the icon to close or open
+            this, navigation_drawer, toolbar, R.string.toggle_drawer, R.string.toggle_off_drawer)
+        navigation_drawer.addDrawerListener(toggle)
+        navigation_view.setNavigationItemSelectedListener(this)
+    }
 
-        //react to clicks on options in the drawer and calls onNavigationItemSelected
-        val navigationView = findViewById<NavigationView>(R.id.navigation_view)
-        navigationView.setNavigationItemSelectedListener(this)
-
-        //shows the content of the fragment in MainActivity's frame layout
+    private fun startMainFragment() {
         val fragment = CategoryFragment()
         val transaction = supportFragmentManager.beginTransaction()
         transaction.add(R.id.content_frame, fragment)
@@ -52,14 +44,12 @@ class MainActivity : MenuActivity(), NavigationView.OnNavigationItemSelectedList
 
     override fun onPostCreate(savedInstanceState: Bundle?) {
         super.onPostCreate(savedInstanceState)
-        // Sync the toggle state to close or open
-        toggle!!.syncState()
+        toggle.syncState()
     }
 
     override fun onConfigurationChanged(config: Configuration) {
         super.onConfigurationChanged(config)
-        // Pass any configuration change to the drawer toggles
-        toggle!!.onConfigurationChanged(config)
+        toggle.onConfigurationChanged(config)
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
@@ -71,16 +61,11 @@ class MainActivity : MenuActivity(), NavigationView.OnNavigationItemSelectedList
      * Navigation drawer options each carry out an action when clicked by the user
      */
     private fun selectOption(item: MenuItem) {
-        //handle navigation view item clicks here
-        val id = item.itemId
         val fragment = CategoryFragment()
-        var intent: Intent? = null
-        //create a bundle that holds information that can be retrieved from fragment
+        val intent: Intent
         val bundle = Bundle()
-
-        //first parameter for bundle is the key of the bundle
         // category numbers are 1)Japanese 2)Vietnamese 3)Thai 4)Korean 5)Chinese
-        when (id) {
+        when (item.itemId) {
             R.id.option_japanese -> {
                 bundle.putInt("IDItem", 1)
                 fragment.arguments = bundle
@@ -110,22 +95,14 @@ class MainActivity : MenuActivity(), NavigationView.OnNavigationItemSelectedList
                 startActivity(intent)
             }
         }
-
-        if (fragment != null) {
-            val ft = supportFragmentManager.beginTransaction()
-            ft.replace(R.id.content_frame, fragment).commit()
-        } else {
-            startActivity(intent)
-        }
-        val drawer = findViewById<DrawerLayout>(R.id.navigation_drawer)
-        drawer.closeDrawer(GravityCompat.START)
+        supportFragmentManager.beginTransaction().replace(R.id.content_frame, fragment).commit()
+        navigation_drawer.closeDrawer(GravityCompat.START)
     }
 
 
     override fun onBackPressed() {
-        val drawer = findViewById<DrawerLayout>(R.id.navigation_drawer)
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
-            drawer.closeDrawer(GravityCompat.START)
+        if (navigation_drawer.isDrawerOpen(GravityCompat.START)) {
+            navigation_drawer.closeDrawer(GravityCompat.START)
         } else {
             super.onBackPressed()
         }
