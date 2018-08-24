@@ -98,7 +98,7 @@ public class DetailActivity extends MenuActivity {
      * update the column favorite in the database when the checkbox is clicked
      * @param view The "save to favorite" CheckBox
      */
-   protected void saveFavorite(View view) {
+    public void saveFavorite(View view) {
         //Get the value of the checkbox
         CheckBox favorite = findViewById(R.id.add_to_favorite_btn);
         boolean isFavorite = favorite.isChecked();
@@ -108,7 +108,7 @@ public class DetailActivity extends MenuActivity {
         databaseHelper = new DatabaseHelper(this);
         try{
             database = databaseHelper.getWritableDatabase();
-           database.update("NOODLE", noodleValues, "_id = ?", new String[] {Integer.toString(getNoodleItemID())});
+            database.update("NOODLE", noodleValues, "_id = ?", new String[] {Integer.toString(getNoodleItemID())});
         } catch(SQLiteException e) {
             Toast toastError = Toast.makeText(this, "Database error!!!", Toast.LENGTH_SHORT);
             toastError.show();
