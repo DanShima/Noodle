@@ -42,7 +42,7 @@
                 android:resource="@xml/searchable" />
         </activity>
         <activity android:name=".MenuActivity" />
-        <activity android:name=".LogActivity"></activity>
+        <activity android:name=".LogActivity"/>
     </application>
 
 </manifest>

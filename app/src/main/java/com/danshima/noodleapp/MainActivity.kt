@@ -7,9 +7,11 @@ import android.support.v4.view.GravityCompat
 import android.support.v4.widget.DrawerLayout
 import android.support.v7.app.ActionBarDrawerToggle
 import android.os.Bundle
+import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
 import android.view.MenuItem
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.toolbar_main.*
 
 
 class MainActivity : MenuActivity(), NavigationView.OnNavigationItemSelectedListener {
@@ -18,16 +20,20 @@ class MainActivity : MenuActivity(), NavigationView.OnNavigationItemSelectedList
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        setupToolbar()
         showNavigationDrawer()
         startMainFragment()
+    }
+
+    private fun setupToolbar() {
+        setSupportActionBar(toolbar)
+        supportActionBar?.setDisplayShowTitleEnabled(false)
     }
 
     /**
      * This method is called by onCreate() to enable and display the toolbar and the navigation drawer
      */
     private fun showNavigationDrawer() {
-        val toolbar = findViewById<Toolbar>(R.id.toolbar)
-        setSupportActionBar(toolbar)
         toggle = ActionBarDrawerToggle(
             this, navigation_drawer, toolbar, R.string.toggle_drawer, R.string.toggle_off_drawer)
         navigation_drawer.addDrawerListener(toggle)
@@ -35,7 +41,7 @@ class MainActivity : MenuActivity(), NavigationView.OnNavigationItemSelectedList
     }
 
     private fun startMainFragment() {
-        val fragment = CategoryFragment()
+        val fragment = CategoryFragment.newInstance()
         val transaction = supportFragmentManager.beginTransaction()
         transaction.add(R.id.content_frame, fragment)
         transaction.commit()
@@ -53,6 +59,7 @@ class MainActivity : MenuActivity(), NavigationView.OnNavigationItemSelectedList
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
+        navigation_drawer.closeDrawer(GravityCompat.START)
         selectOption(item)
         return true
     }
@@ -61,7 +68,7 @@ class MainActivity : MenuActivity(), NavigationView.OnNavigationItemSelectedList
      * Navigation drawer options each carry out an action when clicked by the user
      */
     private fun selectOption(item: MenuItem) {
-        val fragment = CategoryFragment()
+        val fragment = CategoryFragment.newInstance()
         val intent: Intent
         val bundle = Bundle()
         // category numbers are 1)Japanese 2)Vietnamese 3)Thai 4)Korean 5)Chinese
@@ -96,7 +103,6 @@ class MainActivity : MenuActivity(), NavigationView.OnNavigationItemSelectedList
             }
         }
         supportFragmentManager.beginTransaction().replace(R.id.content_frame, fragment).commit()
-        navigation_drawer.closeDrawer(GravityCompat.START)
     }
 
 
