@@ -28,7 +28,7 @@ class CategoryFragment : Fragment() {
         val noodleListPerCategory = view.findViewById<ListView>(R.id.category_noodleList)
 
 
-        val databaseHelper = DatabaseHelper(context)
+        val databaseHelper = DatabaseHelper(requireContext())
 
         try {
             database = databaseHelper.readableDatabase

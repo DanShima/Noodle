@@ -7,30 +7,37 @@ import android.support.v4.view.GravityCompat
 import android.support.v4.widget.DrawerLayout
 import android.support.v7.app.ActionBarDrawerToggle
 import android.os.Bundle
+import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
 import android.view.MenuItem
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.toolbar_main.*
 
 
-class MainActivity : MenuActivity(), NavigationView.OnNavigationItemSelectedListener {
+class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
     private lateinit var toggle: ActionBarDrawerToggle
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        setupToolbar()
         showNavigationDrawer()
         startMainFragment()
+    }
+
+    private fun setupToolbar() {
+        setSupportActionBar(toolbar)
+        supportActionBar?.setDisplayShowTitleEnabled(false)
     }
 
     /**
      * This method is called by onCreate() to enable and display the toolbar and the navigation drawer
      */
     private fun showNavigationDrawer() {
-        val toolbar = findViewById<Toolbar>(R.id.toolbar)
-        setSupportActionBar(toolbar)
         toggle = ActionBarDrawerToggle(
             this, navigation_drawer, toolbar, R.string.toggle_drawer, R.string.toggle_off_drawer)
         navigation_drawer.addDrawerListener(toggle)
+        toggle.syncState()
         navigation_view.setNavigationItemSelectedListener(this)
     }
 
@@ -53,6 +60,7 @@ class MainActivity : MenuActivity(), NavigationView.OnNavigationItemSelectedList
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
+        navigation_drawer.closeDrawer(GravityCompat.START)
         selectOption(item)
         return true
     }
