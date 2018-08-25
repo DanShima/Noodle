@@ -87,6 +87,11 @@ class CategoryFragment : Fragment() {
         }
         return cursor
     }
+
+    companion object {
+        @JvmStatic
+        fun newInstance() = CategoryFragment()
+    }
 }
 
 

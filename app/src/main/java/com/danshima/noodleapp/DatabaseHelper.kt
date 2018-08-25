@@ -16,7 +16,6 @@ import android.widget.Toast
 
 class DatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASENAME, null, DATABASEVERSION) {
 
-    private val noodle: Noodle? = null
     private val database: SQLiteDatabase? = null
     private var cursor: Cursor? = null
 
@@ -57,7 +56,7 @@ class DatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASENAME,
      * @param database The SQLite database called "noodle"
      * @param noodle a Noodle object
      */
-    fun addNoodle(database: SQLiteDatabase, noodle: Noodle) {
+    private fun addNoodle(database: SQLiteDatabase, noodle: Noodle) {
         val noodleValues = ContentValues()
         noodleValues.put(NOODLE_NAME_COLUMN, noodle.name)
         noodleValues.put(NOODLE_DESCRIPTION_COLUMN, noodle.description)

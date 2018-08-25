@@ -14,7 +14,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.toolbar_main.*
 
 
-class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
+class MainActivity : MenuActivity(), NavigationView.OnNavigationItemSelectedListener {
     private lateinit var toggle: ActionBarDrawerToggle
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -37,12 +37,11 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         toggle = ActionBarDrawerToggle(
             this, navigation_drawer, toolbar, R.string.toggle_drawer, R.string.toggle_off_drawer)
         navigation_drawer.addDrawerListener(toggle)
-        toggle.syncState()
         navigation_view.setNavigationItemSelectedListener(this)
     }
 
     private fun startMainFragment() {
-        val fragment = CategoryFragment()
+        val fragment = CategoryFragment.newInstance()
         val transaction = supportFragmentManager.beginTransaction()
         transaction.add(R.id.content_frame, fragment)
         transaction.commit()
@@ -69,7 +68,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
      * Navigation drawer options each carry out an action when clicked by the user
      */
     private fun selectOption(item: MenuItem) {
-        val fragment = CategoryFragment()
+        val fragment = CategoryFragment.newInstance()
         val intent: Intent
         val bundle = Bundle()
         // category numbers are 1)Japanese 2)Vietnamese 3)Thai 4)Korean 5)Chinese
@@ -104,7 +103,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             }
         }
         supportFragmentManager.beginTransaction().replace(R.id.content_frame, fragment).commit()
-        navigation_drawer.closeDrawer(GravityCompat.START)
     }
 
 
