@@ -22,9 +22,9 @@ import java.util.HashSet
 
 
 class LogActivity : MenuActivity() {
-    private var log: UserLog? = null
-    private var adapter: ArrayAdapter<String>? = null
-    private var experiences: ArrayList<String>? = null
+    private lateinit var log: UserLog
+    private lateinit var adapter: ArrayAdapter<String>
+    private lateinit var experiences: ArrayList<String>
 
     /**
      * This method retrieves the data stored through SharedPreferences.
@@ -60,27 +60,25 @@ class LogActivity : MenuActivity() {
         adapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, experiences!!)
 
         //enable listener so user input is registered when the button is clicked
-        val listener = object: View.OnClickListener {
-            override fun onClick(v: View) {
-                val enterLog = findViewById<EditText>(R.id.enterLog)
-                val input = enterLog.text.toString()
-                //if the user doesn't enter any text, a toast will be shown
-                if (input.length == 0) {
-                    val toastError = Toast.makeText(this@LogActivity, "Write something!", Toast.LENGTH_SHORT)
+        val listener = View.OnClickListener {
+            val enterLog = findViewById<EditText>(R.id.enterLog)
+            val input = enterLog.text.toString()
+            //if the user doesn't enter any text, a toast will be shown
+            if (input.isEmpty()) {
+                val toastError = Toast.makeText(this@LogActivity, "Write something!", Toast.LENGTH_SHORT)
+                toastError.show()
+            } else {
+                try {
+                    //add the new experience to the arrayList
+                    addLog(input)
+                    adapter.notifyDataSetChanged()
+                    enterLog.setText("")
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                    val toastError = Toast.makeText(this@LogActivity, "Cannot be added", Toast.LENGTH_SHORT)
                     toastError.show()
-                } else {
-                    try {
-                        //add the new experience to the arrayList
-                        addLog(input)
-                        adapter!!.notifyDataSetChanged()
-                        enterLog.setText("")
-                    } catch (e: Exception) {
-                        e.printStackTrace()
-                        val toastError = Toast.makeText(this@LogActivity, "Cannot be added", Toast.LENGTH_SHORT)
-                        toastError.show()
-                    }
-
                 }
+
             }
         }
         button.setOnClickListener(listener)
@@ -90,7 +88,7 @@ class LogActivity : MenuActivity() {
         //if the user clicks an item in the list view long enough, the item is removed
         listView.onItemLongClickListener = AdapterView.OnItemLongClickListener { parent, view, position, arg ->
             removeLog(position)
-            adapter!!.notifyDataSetChanged()
+            adapter.notifyDataSetChanged()
             false
         }
     }
@@ -105,7 +103,7 @@ class LogActivity : MenuActivity() {
         val sp = this.getSharedPreferences(SHARED_PREFS_NAME, Activity.MODE_PRIVATE)
         val editor = sp.edit()
         val set = HashSet<String>()
-        set.addAll(experiences!!)
+        set.addAll(experiences)
         editor.putStringSet("list", set)
         return editor.commit()
     }
@@ -126,21 +124,21 @@ class LogActivity : MenuActivity() {
         var newExp = newExp
         //convert the UserLog object into string for the arrayList
         log = UserLog(newExp)
-        newExp = log!!.toString()
-        experiences!!.add(0, newExp)
+        newExp = log.toString()
+        experiences.add(0, newExp)
     }
 
     /**
      * This method removes an entry from the log list if the user long clicks it.
      * @param position the index of the entry
      */
-    fun removeLog(position: Int) {
-        val log = experiences!![position]
-        experiences!!.remove(log)
+    private fun removeLog(position: Int) {
+        val log = experiences[position]
+        experiences.remove(log)
     }
 
     companion object {
-        private val SHARED_PREFS_NAME = "MY_SHARED_PREF"
+        private const val SHARED_PREFS_NAME = "MY_SHARED_PREF"
     }
 
 }
