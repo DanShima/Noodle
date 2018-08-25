@@ -6,9 +6,9 @@ package com.danshima.noodleapp
  */
 
 class Noodle(
-    var name: String?,
-    var description: String?,
+    var name: String,
+    var description: String,
     var photoID: Int,
-    var suggestedRestaurant: String?,
+    var suggestedRestaurant: String,
     var categoryNumber: Int)
 

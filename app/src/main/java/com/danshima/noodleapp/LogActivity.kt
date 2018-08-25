@@ -37,7 +37,7 @@ class LogActivity : MenuActivity() {
             val sp = this.getSharedPreferences(SHARED_PREFS_NAME, Activity.MODE_PRIVATE)
             val set = sp.getStringSet("list", HashSet())
             experiences = ArrayList(set!!)
-            experiences!!.sort()
+            experiences.sort()
             return experiences as ArrayList<String>
         }
 

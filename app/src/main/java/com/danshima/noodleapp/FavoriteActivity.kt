@@ -14,10 +14,11 @@ import android.widget.AdapterView
 import android.widget.CursorAdapter
 import android.widget.ListView
 import android.widget.SimpleCursorAdapter
+import kotlinx.android.synthetic.main.activity_favorite.*
 
 class FavoriteActivity : MenuActivity() {
-    private var favoritesCursor: Cursor? = null
-    private var database: SQLiteDatabase? = null
+    private lateinit var favoritesCursor: Cursor
+    private lateinit var database: SQLiteDatabase
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,9 +45,8 @@ class FavoriteActivity : MenuActivity() {
             val intent = Intent(this@FavoriteActivity, DetailActivity::class.java)
             startActivity(intent)
         }
-        //add the listener to the list view
-        val listview = findViewById<ListView>(R.id.favorite_noodleList)
-        listview.onItemClickListener = itemClickListener
+
+        favorite_noodleList.onItemClickListener = itemClickListener
     }
 
     /**
@@ -102,8 +102,8 @@ class FavoriteActivity : MenuActivity() {
      */
     public override fun onDestroy() {
         super.onDestroy()
-        favoritesCursor!!.close()
-        database!!.close()
+        favoritesCursor.close()
+        database.close()
     }
 
 
