@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Noodles Adviser Stockholm</string>
+    <string name="app_name">Noodles in Stockholm</string>
     <string name="introduction_main">Hi! This app will show you different types of noodles and where you can eat them in downtown Stockholm. Browse and enjoy~ ^_^</string>
     <!--in DetailActivity-->
     <string name="image">An example picture of the chosen noodles</string>
@@ -10,7 +10,7 @@
     <string name="toggle_off_drawer">Close the drawer</string>
     <string name="nav_extra">Extra</string>
     <string name="option_favorite">My favorites</string>
-    <string name="option_share">Share to ...</string>
+    <string name="option_share">Share to …</string>
     <string name="option_log">My Log</string>
     <string name="japanese_option">Japanese noodles</string>
     <string name="vietnamese_option">Vietnamese noodles</string>

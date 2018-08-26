@@ -5,5 +5,5 @@
     android:layout_width="match_parent"
     android:layout_height="?attr/actionBarSize"
     app:layout_scrollFlags="scroll|enterAlways"
-    android:background="?attr/colorPrimary"
+    android:background="@color/colorPrim"
     android:theme="@style/AppTheme" />

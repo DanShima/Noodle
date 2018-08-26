@@ -18,8 +18,8 @@ import android.widget.Toast
  * A subclass displayed in the main page that shows a list of noodle per category.
  */
 class CategoryFragment : Fragment() {
-    private var cursor: Cursor? = null
-    private var database: SQLiteDatabase? = null
+    private lateinit var cursor: Cursor
+    private lateinit var database: SQLiteDatabase
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -62,8 +62,8 @@ class CategoryFragment : Fragment() {
      */
     override fun onDestroy() {
         super.onDestroy()
-        cursor?.close()
-        database?.close()
+        cursor.close()
+        database.close()
     }
 
     /**
@@ -80,11 +80,8 @@ class CategoryFragment : Fragment() {
             iID = bundle.getInt("IDItem", 1)
         }
         val selectQuery = "SELECT * FROM NOODLE WHERE CATEGORY=$iID"
-        cursor = database!!.rawQuery(selectQuery, null)
-
-        if (cursor != null) {
-            cursor!!.moveToFirst()
-        }
+        cursor = database.rawQuery(selectQuery, null)
+        cursor.moveToFirst()
         return cursor
     }
 

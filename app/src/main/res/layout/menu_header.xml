@@ -3,26 +3,23 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="180dp"
-    android:theme="@style/ThemeOverlay.AppCompat.Dark"
-    >
+    android:background="@color/colorSecond"
+    android:theme="@style/ThemeOverlay.AppCompat.Light">
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:scaleType="centerCrop"
-        android:src="@drawable/ramen"
-        />
-    <LinearLayout
+        android:src="@drawable/kittyramen"
+        android:alpha="0.5"/>
+    <TextView
         android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_margin="10dp"
-        android:orientation="vertical"
-        android:gravity="bottom|start"
-        >
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/app_name"
-            android:textAppearance="@style/TextAppearance.AppCompat.Body2"
-            />
-    </LinearLayout>
+        android:layout_height="wrap_content"
+        android:text="@string/app_name"
+        android:textColor="@color/colorText"
+        android:textStyle="bold"
+        android:textSize="16sp"
+        android:textAllCaps="true"
+        android:layout_gravity="bottom|start"
+        android:layout_marginStart="14dp"
+        android:layout_marginBottom="8dp"/>
 </FrameLayout>

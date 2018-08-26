@@ -5,16 +5,14 @@ import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteException
 import android.support.v4.app.NavUtils
-import android.support.v7.app.ActionBar
 import android.os.Bundle
-import android.support.v7.widget.Toolbar
 import android.view.MenuItem
-import android.view.View
 import android.widget.AdapterView
 import android.widget.CursorAdapter
 import android.widget.ListView
 import android.widget.SimpleCursorAdapter
 import kotlinx.android.synthetic.main.activity_favorite.*
+import kotlinx.android.synthetic.main.toolbar_main.*
 
 class FavoriteActivity : MenuActivity() {
     private lateinit var favoritesCursor: Cursor
@@ -24,7 +22,6 @@ class FavoriteActivity : MenuActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_favorite)
 
-        val toolbar = findViewById<Toolbar>(R.id.toolbar)
         toolbar.title = "My Favorites"
         setSupportActionBar(toolbar)
         //get a support Actionbar corresponding to this toolbar
@@ -84,7 +81,7 @@ class FavoriteActivity : MenuActivity() {
         super.onRestart()
         //new favorites are not shown in the list. create a new cursor
         try {
-            val newCursor = database!!.query("NOODLE", arrayOf("_id", "NAME"), "FAVORITE = 1", null, null, null, null)
+            val newCursor = database.query("NOODLE", arrayOf("_id", "NAME"), "FAVORITE = 1", null, null, null, null)
             //get reference to the list view's cursor adapter
             val listFavorites = findViewById<ListView>(R.id.favorite_noodleList)
             val adapter = listFavorites.adapter as CursorAdapter

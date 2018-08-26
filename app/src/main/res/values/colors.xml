@@ -6,4 +6,15 @@
     <color name="listView_background">#e3c8c7c8</color>
     <color name="listView_listSelector">#beac9da9</color>
     <color name="color_button">#9e8190</color>
+
+    <!--trying out new color set-->
+    <color name="colorPrim">#fedbd0</color>
+    <color name="colorSecond">#feeae6</color>
+    <color name="colorSurface">#fffbfa</color>
+    <color name="colorBackground">#ffffff</color>
+    <color name="colorError">#c5032b</color>
+    <color name="colorErrorText">#fffbfa</color>
+    <color name="colorText">#442c2e</color>
+
+
 </resources>
