@@ -1,37 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:yourapp="http://schemas.android.com/tools">
-    <group
-        android:checkableBehavior="single"
-        >
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group android:checkableBehavior="single">
 
         <item
             android:id="@+id/option_japanese"
             android:title="@string/japanese_option"
+            android:icon="@drawable/ic_noodle_icon"
             />
         <item
             android:id="@+id/option_vietnamese"
             android:title="@string/vietnamese_option"
+            android:icon="@drawable/ic_noodle_icon"
             />
         <item
             android:id="@+id/option_thai"
             android:title="@string/thai_option"
+            android:icon="@drawable/ic_noodle_icon"
             />
         <item
             android:id="@+id/option_korean"
             android:title="@string/korean_option"
+            android:icon="@drawable/ic_noodle_icon"
             />
         <item
             android:id="@+id/option_chinese"
             android:title="@string/chinese_option"
+            android:icon="@drawable/ic_noodle_icon"
             />
 
     </group>
 
-    <item
-        android:title="@string/nav_extra"
-        >
+    <item android:title="@string/nav_extra">
         <menu>
 
             <item

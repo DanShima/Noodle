@@ -16,16 +16,16 @@ import android.widget.Toast
 
 class DatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASENAME, null, DATABASEVERSION) {
 
-    private val database: SQLiteDatabase? = null
-    private var cursor: Cursor? = null
+    private lateinit var database: SQLiteDatabase
+    private lateinit var cursor: Cursor
 
     /**
      * This method fetches names of the noodles from the database
      * @return cursor that finds the specific info inside the database
      */
-    val name: Cursor?
+    val name: Cursor
         get() {
-            cursor = database!!.query("NOODLE", arrayOf("_id", "NAME"), null, null, null, null, null)
+            cursor = database.query("NOODLE", arrayOf("_id", "NAME"), null, null, null, null, null)
             return cursor
         }
 

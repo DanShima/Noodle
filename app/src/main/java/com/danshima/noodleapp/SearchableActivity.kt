@@ -13,19 +13,20 @@ import android.widget.CursorAdapter
 import android.widget.ListView
 import android.widget.SimpleCursorAdapter
 import android.widget.Toast
+import kotlinx.android.synthetic.main.activity_searchable.*
+import kotlinx.android.synthetic.main.toolbar_main.*
 
 
 class SearchableActivity : MenuActivity() {
-    private var databaseHelper: DatabaseHelper? = null
-    private var database: SQLiteDatabase? = null
-    private var cursor: Cursor? = null
-    private var resultList: ListView? = null
+    private lateinit var databaseHelper: DatabaseHelper
+    private lateinit var database: SQLiteDatabase
+    private lateinit var cursor: Cursor
+    private lateinit var resultList: ListView
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_searchable)
-        val toolbar = findViewById<Toolbar>(R.id.toolbar)
         setSupportActionBar(toolbar)
 
         resultList = findViewById(R.id.search_result_list)
@@ -59,8 +60,7 @@ class SearchableActivity : MenuActivity() {
             }
         } catch (e: Exception) {
             e.printStackTrace()
-            val toast = Toast.makeText(this, "error there!", Toast.LENGTH_SHORT)
-            toast.show()
+            Toast.makeText(this, "error there!", Toast.LENGTH_SHORT).show()
         }
 
     }
@@ -71,17 +71,15 @@ class SearchableActivity : MenuActivity() {
      * @return Cursor the cursor for finding the relevant information
      */
 
-    fun searchInDatabase(input: String): Cursor? {
+    private fun searchInDatabase(input: String): Cursor? {
         databaseHelper = DatabaseHelper(this)
-        database = databaseHelper!!.readableDatabase
+        database = databaseHelper.readableDatabase
         val columns = arrayOf("_id", "NAME", "DESCRIPTION")
         val selectionString = "NAME LIKE '%$input%' OR DESCRIPTION LIKE '%$input%'"
         //sort the filtered list in alphabetical order
         val orderBy = "NAME" + " ASC"
-        cursor = database!!.query("NOODLE", columns, selectionString, null, null, null, orderBy)
-        if (cursor != null) {
-            cursor!!.moveToFirst()
-        }
+        cursor = database.query("NOODLE", columns, selectionString, null, null, null, orderBy)
+        cursor.moveToFirst()
         return cursor
     }
 
@@ -96,15 +94,14 @@ class SearchableActivity : MenuActivity() {
             val toast = Toast.makeText(this, "No result found", Toast.LENGTH_SHORT)
             toast.show()
         } else {
-            resultList = findViewById(R.id.search_result_list)
             //create a new cursor adapter
             val adapter = SimpleCursorAdapter(this@SearchableActivity,
                 android.R.layout.simple_list_item_1, cursor, arrayOf("NAME"), intArrayOf(android.R.id.text1), 0)
             //set the cursor adapter to the list view
-            resultList!!.adapter = adapter
+            search_result_list.adapter = adapter
 
             // Define the on-click listener for the list items
-            resultList!!.onItemClickListener = AdapterView.OnItemClickListener { parent, view, position, id ->
+            search_result_list.onItemClickListener = AdapterView.OnItemClickListener { parent, view, position, id ->
                 // Build the Intent used to open WordActivity with a specific word Uri
                 val newIntent = Intent(this@SearchableActivity, DetailActivity::class.java)
                 newIntent.putExtra(DetailActivity.CHOSEN_NOODLE_ITEM, id.toInt())

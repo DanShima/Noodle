@@ -19,12 +19,12 @@ import com.danshima.noodleapp.DetailActivity.Companion.CHOSEN_NOODLE_ITEM
 import kotlinx.android.synthetic.main.activity_detail.*
 
 class DetailActivity : MenuActivity() {
-    private var databaseHelper: DatabaseHelper? = null
-    private var database: SQLiteDatabase? = null
-    private var cursor: Cursor? = null
+    private lateinit var databaseHelper: DatabaseHelper
+    private lateinit var database: SQLiteDatabase
+    private lateinit var cursor: Cursor
 
     //get the noodle that was selected from the intent
-    val noodleItemID: Int
+    private val noodleItemID: Int
         get() = intent.extras!!.get(CHOSEN_NOODLE_ITEM) as Int
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -46,8 +46,8 @@ class DetailActivity : MenuActivity() {
         //create a cursor
         databaseHelper = DatabaseHelper(this)
         try {
-            database = databaseHelper!!.readableDatabase
-            cursor = database!!.query("NOODLE", arrayOf("NAME", "DESCRIPTION", "IMAGEID", "RESTAURANT", "FAVORITE"),
+            database = databaseHelper.readableDatabase
+            cursor = database.query("NOODLE", arrayOf("NAME", "DESCRIPTION", "IMAGEID", "RESTAURANT", "FAVORITE"),
                 "_id = ?", arrayOf(Integer.toString(noodleItemID)), null, null, null)
 
         } catch (e: SQLiteException) {
@@ -57,14 +57,14 @@ class DetailActivity : MenuActivity() {
         }
 
         //move to the first row in the Cursor
-        if (cursor!!.moveToFirst()) {
+        if (cursor.moveToFirst()) {
             //get details from the cursor
-            val name = cursor!!.getString(0)
-            val description = cursor!!.getString(1)
-            val image = cursor!!.getInt(2)
-            val restaurant = cursor!!.getString(3)
+            val name = cursor.getString(0)
+            val description = cursor.getString(1)
+            val image = cursor.getInt(2)
+            val restaurant = cursor.getString(3)
             // 1 for checked, and 0 for unchecked in the favorite checkbox
-            val isFavorite = cursor!!.getInt(4) == 1
+            val isFavorite = cursor.getInt(4) == 1
 
             name_info.text = name
 
@@ -90,8 +90,8 @@ class DetailActivity : MenuActivity() {
         //Get a reference to the database and update the FAVORITE column
         databaseHelper = DatabaseHelper(this)
         try {
-            database = databaseHelper!!.writableDatabase
-            database!!.update("NOODLE", noodleValues, "_id = ?", arrayOf(Integer.toString(noodleItemID)))
+            database = databaseHelper.writableDatabase
+            database.update("NOODLE", noodleValues, "_id = ?", arrayOf(Integer.toString(noodleItemID)))
         } catch (e: SQLiteException) {
             val toastError = Toast.makeText(this, "Database error!!!", Toast.LENGTH_SHORT)
             toastError.show()

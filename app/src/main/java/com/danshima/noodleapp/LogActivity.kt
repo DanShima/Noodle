@@ -11,6 +11,7 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.ListView
 import android.widget.Toast
+import kotlinx.android.synthetic.main.toolbar_main.*
 import java.util.ArrayList
 import java.util.Collections
 import java.util.Comparator
@@ -37,16 +38,14 @@ class LogActivity : MenuActivity() {
             val sp = this.getSharedPreferences(SHARED_PREFS_NAME, Activity.MODE_PRIVATE)
             val set = sp.getStringSet("list", HashSet())
             experiences = ArrayList(set!!)
-            experiences!!.sort()
-            return experiences as ArrayList<String>
+            experiences.sort()
+            return experiences
         }
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_log)
-        //set up toolbar as the normal app bar
-        val toolbar = findViewById<Toolbar>(R.id.toolbar)
         toolbar.title = "My List"
         setSupportActionBar(toolbar)
 
@@ -57,7 +56,7 @@ class LogActivity : MenuActivity() {
         experiences = ArrayList()
         experiences = array
         //create an array adapter that connects the array to the list view
-        adapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, experiences!!)
+        adapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, experiences)
 
         //enable listener so user input is registered when the button is clicked
         val listener = View.OnClickListener {

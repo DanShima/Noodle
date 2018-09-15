@@ -4,12 +4,10 @@ import android.content.Intent
 import android.content.res.Configuration
 import android.support.design.widget.NavigationView
 import android.support.v4.view.GravityCompat
-import android.support.v4.widget.DrawerLayout
 import android.support.v7.app.ActionBarDrawerToggle
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
-import android.support.v7.widget.Toolbar
 import android.view.MenuItem
+import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.toolbar_main.*
 
@@ -21,6 +19,7 @@ class MainActivity : MenuActivity(), NavigationView.OnNavigationItemSelectedList
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         setupToolbar()
+        setupBottomNavigation()
         showNavigationDrawer()
         startMainFragment()
     }
@@ -28,6 +27,24 @@ class MainActivity : MenuActivity(), NavigationView.OnNavigationItemSelectedList
     private fun setupToolbar() {
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayShowTitleEnabled(false)
+    }
+
+    private fun setupBottomNavigation() {
+        bottom_navigation.setOnNavigationItemSelectedListener {
+            when (it.itemId) {
+                R.id.action_home -> {
+                    Toast.makeText(this, "home", Toast.LENGTH_SHORT).show()
+                }
+                R.id.action_favorite -> {
+                    intent = Intent(this, FavoriteActivity::class.java)
+                    startActivity(intent)
+                }
+                R.id.action_account -> {
+                    Toast.makeText(this, "account", Toast.LENGTH_SHORT).show()
+                }
+            }
+            true
+        }
     }
 
     /**
@@ -42,9 +59,7 @@ class MainActivity : MenuActivity(), NavigationView.OnNavigationItemSelectedList
 
     private fun startMainFragment() {
         val fragment = CategoryFragment.newInstance()
-        val transaction = supportFragmentManager.beginTransaction()
-        transaction.add(R.id.content_frame, fragment)
-        transaction.commit()
+        supportFragmentManager.beginTransaction().add(R.id.main_frame_holder, fragment).commit()
     }
 
 
@@ -102,7 +117,7 @@ class MainActivity : MenuActivity(), NavigationView.OnNavigationItemSelectedList
                 startActivity(intent)
             }
         }
-        supportFragmentManager.beginTransaction().replace(R.id.content_frame, fragment).commit()
+        supportFragmentManager.beginTransaction().replace(R.id.main_frame_holder, fragment).commit()
     }
 
 

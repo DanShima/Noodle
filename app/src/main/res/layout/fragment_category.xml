@@ -11,8 +11,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:listSelector="@color/listView_listSelector"
-        android:background="@color/listView_background"
-
-        />
+        android:background="@color/listView_background"/>
 
 </LinearLayout>
