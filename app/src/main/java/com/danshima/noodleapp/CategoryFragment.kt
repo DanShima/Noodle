@@ -13,6 +13,7 @@ import android.widget.AdapterView
 import android.widget.ListView
 import android.widget.SimpleCursorAdapter
 import android.widget.Toast
+import kotlinx.android.synthetic.main.fragment_category.*
 
 /**
  * A subclass displayed in the main page that shows a list of noodle per category.
@@ -25,10 +26,9 @@ class CategoryFragment : Fragment() {
                               savedInstanceState: Bundle?): View? {
 
         val view = inflater.inflate(R.layout.fragment_category, container, false)
-        val noodleListPerCategory = view.findViewById<ListView>(R.id.category_noodleList)
-
 
         val databaseHelper = DatabaseHelper(requireContext())
+        val noodleListPerCategory = view.findViewById<ListView>(R.id.category_noodleList)
 
         try {
             database = databaseHelper.readableDatabase
@@ -40,12 +40,11 @@ class CategoryFragment : Fragment() {
             noodleListPerCategory.adapter = listAdapter
         } catch (e: SQLiteException) {
             e.printStackTrace()
-            val toast = Toast.makeText(context, "Database is not working!", Toast.LENGTH_SHORT)
-            toast.show()
+            Toast.makeText(context, "Database is not working!", Toast.LENGTH_SHORT).show()
         }
 
         //show item detail using the listener when an item is clicked
-        val itemClickListener = AdapterView.OnItemClickListener { noodleListPerCategory, view, position, id ->
+        val itemClickListener = AdapterView.OnItemClickListener { _, _, _, id ->
             //starts DetailActivity
             val intent = Intent(context, DetailActivity::class.java)
             intent.putExtra(DetailActivity.CHOSEN_NOODLE_ITEM, id.toInt())

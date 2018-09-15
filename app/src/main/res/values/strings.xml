@@ -25,6 +25,11 @@
 
     <string name="search_hint">Search by name or description</string>
 
+    <!-- Bottom navigation titles -->
+    <string name="action_home">Home</string>
+    <string name="action_favorite">Favorite</string>
+    <string name="action_account">Account</string>
+
 
 
 </resources>
