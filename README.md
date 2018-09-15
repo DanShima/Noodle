@@ -1,10 +1,13 @@
->**SDA Individual Development Project Report
-November 2017**
+>**About**
+- This project was started as an individual assignment from Software Development Academy in November 2017.
+It was initially written in Java. After I discovered the beauty of Kotlin, I decided to revisit this school project and rewrote it in Kotlin,
+in an ongoing effort of continuous improvement.
+
 
 >**Design**
-The idea is to make an android application which shows different types of noodle dishes that you can eat in downtown Stockholm.
+- I LOVE noodle soup! Therefore, it would be fun to make an android application which shows different types of noodle dishes that you can eat in downtown Stockholm.
 
->**Features:**
+>**Current features:**
 - The noodle objects are stored in a SQLite database.
 - The noodles are divided into five categories(Japanese, Korean,
   Vietnamese, Thai, and Chinese).
@@ -18,11 +21,3 @@ The idea is to make an android application which shows different types of noodle
   like a quick notepad.
 - The user can share to others through email/message (no database
   content).
-
-![User Diagram](https://drive.google.com/file/d/1W9b0rPFRgfAJ9J0NG3jqlxixf1NgHikM/view?usp=sharing)
-
->**Implementation:**
-After finalizing my idea, design and UI on sketch, I gathered all resource files (images, descriptions etc)
-Then I made a base model with Noodle.class, Category.class (arraylists), Log.class and Main and tried them out in Terminal. But fairly quickly, I decided to move on to Android Studio to create layouts and views.
-In Android Studio, I first built a prototype with simple list view.
-After the prototype, I set up a SQLite database using databasehelper and added a navigation drawer, which shows the five categories, my favorite and log. I also implemented search function, which allows the user to look up a noodle by name or any word in its description. The search result is returned and displayed in alphabetical order. There is a search functionality too, but it does not share anything more than a string instead of app content. The “My Log” option was the last feature to be added, because I felt that my app would be better with some form of user input.
