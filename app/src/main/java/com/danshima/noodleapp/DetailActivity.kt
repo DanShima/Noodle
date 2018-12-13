@@ -4,10 +4,10 @@ import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteException
 import android.database.sqlite.SQLiteOpenHelper
-import android.support.v4.app.NavUtils
-import android.support.v7.app.ActionBar
+import androidx.core.app.NavUtils
+import androidx.appcompat.app.ActionBar
 import android.os.Bundle
-import android.support.v7.widget.Toolbar
+import androidx.appcompat.widget.Toolbar
 import android.view.MenuItem
 import android.widget.ImageView
 import android.widget.TextView

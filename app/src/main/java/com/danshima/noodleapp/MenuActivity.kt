@@ -4,14 +4,14 @@ import android.app.SearchManager
 import android.app.SearchableInfo
 import android.content.Context
 import android.content.Intent
-import android.support.v4.view.MenuItemCompat
-import android.support.v7.app.AppCompatActivity
+import androidx.core.view.MenuItemCompat
+import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.support.v7.widget.SearchView
-import android.support.v7.widget.Toolbar
+import androidx.appcompat.widget.SearchView
+import androidx.appcompat.widget.Toolbar
 import android.view.Menu
 import android.view.MenuItem
-import android.support.v7.widget.ShareActionProvider
+import androidx.appcompat.widget.ShareActionProvider
 
 
 open class MenuActivity : AppCompatActivity() {

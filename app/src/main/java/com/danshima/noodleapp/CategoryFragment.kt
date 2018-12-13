@@ -5,7 +5,7 @@ import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteException
 import android.os.Bundle
-import android.support.v4.app.Fragment
+import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -18,7 +18,7 @@ import kotlinx.android.synthetic.main.fragment_category.*
 /**
  * A subclass displayed in the main page that shows a list of noodle per category.
  */
-class CategoryFragment : Fragment() {
+class CategoryFragment : androidx.fragment.app.Fragment() {
     private lateinit var cursor: Cursor
     private lateinit var database: SQLiteDatabase
 

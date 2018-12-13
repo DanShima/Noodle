@@ -4,7 +4,7 @@ import android.content.Intent
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteException
-import android.support.v4.app.NavUtils
+import androidx.core.app.NavUtils
 import android.os.Bundle
 import android.view.MenuItem
 import android.widget.AdapterView

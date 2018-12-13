@@ -2,9 +2,9 @@ package com.danshima.noodleapp
 
 import android.content.Intent
 import android.content.res.Configuration
-import android.support.design.widget.NavigationView
-import android.support.v4.view.GravityCompat
-import android.support.v7.app.ActionBarDrawerToggle
+import com.google.android.material.navigation.NavigationView
+import androidx.core.view.GravityCompat
+import androidx.appcompat.app.ActionBarDrawerToggle
 import android.os.Bundle
 import android.view.MenuItem
 import android.widget.Toast
