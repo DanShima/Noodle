@@ -26,7 +26,19 @@ android {
 }
 
 dependencies {
+        val roomVersion = "2.1.0-alpha03"
+        val lifecycleVersion = "1.1.1"
+
         implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
+
+        implementation("androidx.room:room-runtime:$roomVersion")
+        kapt("androidx.room:room-compiler:$roomVersion")
+        testImplementation("androidx.room:room-testing:$roomVersion")
+
+        implementation("android.arch.lifecycle:extensions:$lifecycleVersion")
+        kapt("android.arch.lifecycle:compiler:$lifecycleVersion")
+        testImplementation("android.arch.core:core-testing:$lifecycleVersion")
+
         implementation("com.android.support:appcompat-v7:28.0.0")
         implementation("com.android.support.constraint:constraint-layout:1.1.3")
         implementation("com.android.support:support-v4:28.0.0")
