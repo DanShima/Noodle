@@ -6,6 +6,9 @@
 # Built application files
 *.apk
 *.ap_
+*.bin
+*.ser
+*.lock
 
 # Files for the ART/Dalvik VM
 *.dex
@@ -23,6 +26,7 @@ out/
 build/
 .idea/gradle.xml
 .idea
+.idea/libraries
 
 # Signing files
 .signing/
