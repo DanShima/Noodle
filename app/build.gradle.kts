@@ -1,9 +1,13 @@
-
+val kotlin_version: String by extra
 plugins {
     id("com.android.application")
     id("kotlin-android")
     id("kotlin-android-extensions")
     id("kotlin-kapt")
+}
+apply {
+    plugin("kotlin-android")
+    plugin("kotlin-android-extensions")
 }
 
 android {
@@ -39,15 +43,16 @@ dependencies {
         kapt("android.arch.lifecycle:compiler:$lifecycleVersion")
         testImplementation("android.arch.core:core-testing:$lifecycleVersion")
 
-        implementation("com.android.support:appcompat-v7:28.0.0")
+        compile("com.android.support:appcompat-v7:28.0.0")
         implementation("com.android.support.constraint:constraint-layout:1.1.3")
         implementation("com.android.support:support-v4:28.0.0")
+        implementation("androidx.cardview:cardview:1.0.0")
         implementation("com.android.support:recyclerview-v7:28.0.0")
         testImplementation("junit:junit:4.12")
         androidTestImplementation("com.android.support.test:runner:1.0.2")
         androidTestImplementation("com.android.support.test.espresso:espresso-core:3.0.2")
         implementation("com.android.support:design:28.0.0")
-        implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.3.10")
+        implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.3.21")
 }
 repositories {
         mavenCentral()

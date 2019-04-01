@@ -1,5 +1,7 @@
 package com.danshima.noodleapp;
 
+import com.danshima.noodleapp.data.Noodle;
+
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;

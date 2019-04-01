@@ -8,6 +8,9 @@ import androidx.appcompat.app.ActionBarDrawerToggle
 import android.os.Bundle
 import android.view.MenuItem
 import android.widget.Toast
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
+import com.danshima.noodleapp.data.Noodle
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.toolbar_main.*
 
@@ -18,6 +21,7 @@ class MainActivity : MenuActivity(), NavigationView.OnNavigationItemSelectedList
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
         setupToolbar()
         setupBottomNavigation()
         showNavigationDrawer()
