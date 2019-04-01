@@ -1,7 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <dimen name="margin_4">4dp</dimen>
     <dimen name="general_margin">8dp</dimen>
     <dimen name="text_margin">16dp</dimen>
+    <!--Text sizes-->
+    <dimen name="small_text">14sp</dimen>
+    <dimen name="medium_text">18sp</dimen>
+    <dimen name="large_text">20sp</dimen>
     <!-- Bottom navigation -->
     <dimen name="bottom_navigation_height">56dp</dimen>
     <dimen name="bottom_navigation_elevation">20dp</dimen>

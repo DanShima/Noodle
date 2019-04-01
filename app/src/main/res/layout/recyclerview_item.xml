@@ -1,12 +1,75 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+<androidx.cardview.widget.CardView
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_gravity="center"
+    app:cardCornerRadius="@dimen/margin_4"
+    android:layout_margin="@dimen/general_margin"
+    app:cardElevation="2dp"
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <TextView
-        android:id="@+id/textView"
-        style="@style/temp_style"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@android:color/holo_orange_light" />
-</LinearLayout>
+        app:layout_constraintEnd_toStartOf="@+id/noodle_image"
+        app:layout_constraintStart_toStartOf="@+id/noodle_image">
+
+        <TextView
+            android:id="@+id/noodle_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/noodle_image"
+            tools:text="Ramen"
+            android:textStyle="bold"
+            android:textColor="@color/colorText"
+            android:textSize="@dimen/large_text"
+            android:gravity="center"
+            />
+
+        <ImageView
+            android:id="@+id/noodle_image"
+            android:layout_width="match_parent"
+            android:layout_height="160dp"
+            android:layout_marginTop="@dimen/general_margin"
+            app:layout_constraintTop_toTopOf="@id/noodle_title"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/noodle_info"
+            tools:src="@drawable/colramen" />
+
+        <TextView
+            android:id="@+id/noodle_info"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/medium_text"
+            android:gravity="center"
+            android:paddingStart="@dimen/general_margin"
+            android:paddingEnd="@dimen/general_margin"
+            android:textColor="@color/colorText"
+            app:layout_constraintBottom_toBottomOf="@id/noodle_restaurant"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/noodle_image"
+            tools:text="Onononononom" />
+
+        <TextView
+            android:id="@+id/noodle_restaurant"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/medium_text"
+            android:gravity="center"
+            android:paddingStart="@dimen/general_margin"
+            android:paddingEnd="@dimen/general_margin"
+            android:textColor="@color/colorText"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/noodle_info"
+            tools:text="Best restaurant around the corner." />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.cardview.widget.CardView>
+

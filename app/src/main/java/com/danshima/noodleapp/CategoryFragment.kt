@@ -32,14 +32,13 @@ class CategoryFragment : androidx.fragment.app.Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         viewmodel = ViewModelProviders.of(this).get(NoodleViewModel::class.java)
-        viewmodel.getAllNoodles().observe(this, Observer<List<Noodle>>() {
+        viewmodel.getAllNoodles().observe(this, Observer<List<Noodle>> {
             listAdapter.setNoodles(it)
         })
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-
         return inflater.inflate(R.layout.fragment_category, container, false)
 
 //        val databaseHelper = DatabaseHelper(requireContext())
@@ -75,7 +74,7 @@ class CategoryFragment : androidx.fragment.app.Fragment() {
         initRecyclerview()
     }
 
-    fun initRecyclerview() {
+    private fun initRecyclerview() {
         list_recyclerview.apply {
             this.layoutManager = LinearLayoutManager(activity).apply {
                 orientation = RecyclerView.VERTICAL
@@ -100,25 +99,6 @@ class CategoryFragment : androidx.fragment.app.Fragment() {
         super.onDestroy()
         cursor.close()
         database.close()
-    }
-
-    /**
-     * This method gets data from the category column in the database
-     * @param
-     * @return The cursor used to perform database query
-     */
-    private fun fetchCategory(): Cursor? {
-        //the Integer value stored in the category column in the database
-        var iID = 0
-        //we use a bundle to store the data
-        val bundle = this.arguments
-        if (bundle != null) {
-            iID = bundle.getInt("IDItem", 1)
-        }
-        val selectQuery = "SELECT * FROM NOODLE WHERE CATEGORY=$iID"
-        cursor = database.rawQuery(selectQuery, null)
-        cursor.moveToFirst()
-        return cursor
     }
 
     companion object {
