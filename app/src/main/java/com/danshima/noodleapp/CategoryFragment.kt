@@ -40,33 +40,6 @@ class CategoryFragment : androidx.fragment.app.Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_category, container, false)
-
-//        val databaseHelper = DatabaseHelper(requireContext())
-//        val noodleListPerCategory = view.findViewById<ListView>(R.id.category_noodleList)
-
-//        try {
-//            database = databaseHelper.readableDatabase
-//            fetchCategory()
-//
-//            //create the cursor adapter to fill the list view with values from the database
-//            val listAdapter = SimpleCursorAdapter(context, android.R.layout.simple_list_item_1, cursor, arrayOf("NAME"),
-//                intArrayOf(android.R.id.text1), 0)
-//            noodleListPerCategory.adapter = listAdapter
-//        } catch (e: SQLiteException) {
-//            e.printStackTrace()
-//            Toast.makeText(context, "Database is not working!", Toast.LENGTH_SHORT).show()
-//        }
-
-        //show item detail using the listener when an item is clicked
-//        val itemClickListener = AdapterView.OnItemClickListener { _, _, _, id ->
-//            //starts DetailActivity
-//            val intent = Intent(context, DetailActivity::class.java)
-//            intent.putExtra(DetailActivity.CHOSEN_NOODLE_ITEM, id.toInt())
-//            startActivity(intent)
-//        }
-//        //connects the listener to the list view
-//        noodleListPerCategory.onItemClickListener = itemClickListener
-//        return view
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
