@@ -16,5 +16,5 @@ data class Noodle(
     val description: String,
     val photoID: Int,
     val suggestedRestaurant: String,
-    val categoryNumber: Int)
+    val categoryNumber: Int?)
 
