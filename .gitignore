@@ -25,7 +25,7 @@ out/
 .gradle/
 build/
 .idea/gradle.xml
-.idea
+.idea/workspace.xml
 .idea/libraries
 
 # Signing files

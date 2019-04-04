@@ -7,15 +7,22 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.content.ContextCompat
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.danshima.noodleapp.data.Noodle
 import kotlinx.android.synthetic.main.recyclerview_item.view.*
+import kotlin.properties.Delegates
 
 typealias ClickListener = (Int) -> Unit
 
-class NoodleListAdapter(private val onClickListener: ClickListener) : RecyclerView.Adapter<NoodleListAdapter.NoodleViewHolder>() {
+class NoodleListAdapter(private val onClickListener: ClickListener) :
+    RecyclerView.Adapter<NoodleListAdapter.NoodleViewHolder>(),
+    NotifyChangeUtil {
     private lateinit var context: Context
-    private var noodles: List<Noodle>? = null
+
+    var noodles: List<Noodle> by Delegates.observable(emptyList()) { prop, oldList, newList -> //notify every time the list changes
+        notifyListChanges(oldList, newList) { o, n -> o.id == n.id }
+    }
 
     inner class NoodleViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), View.OnClickListener {
         val noodleInfo: TextView = itemView.noodle_info
@@ -39,7 +46,7 @@ class NoodleListAdapter(private val onClickListener: ClickListener) : RecyclerVi
     }
 
     override fun onBindViewHolder(holder: NoodleViewHolder, position: Int) {
-        noodles?.let {
+        noodles.let {
             val image = it[position]
             holder.apply {
                 noodleInfo.text = image.description
@@ -51,10 +58,29 @@ class NoodleListAdapter(private val onClickListener: ClickListener) : RecyclerVi
         }
     }
 
-    fun setNoodles(noodles: List<Noodle>) {
-        this.noodles = noodles
-        notifyDataSetChanged()
-    }
+    override fun getItemCount(): Int = noodles.size
 
-    override fun getItemCount(): Int = noodles?.size ?: 0
+
+}
+
+
+interface NotifyChangeUtil {
+    fun <T> RecyclerView.Adapter<*>.notifyListChanges(oldList: List<T>, newList: List<T>, compare: (T, T) -> Boolean) {
+        val diff = DiffUtil.calculateDiff(object : DiffUtil.Callback() {
+
+            override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
+                return compare(oldList[oldItemPosition], newList[newItemPosition])
+            }
+
+            override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
+                return oldList[oldItemPosition] == newList[newItemPosition]
+            }
+
+            override fun getOldListSize() = oldList.size
+
+            override fun getNewListSize() = newList.size
+        })
+
+        diff.dispatchUpdatesTo(this)
+    }
 }
