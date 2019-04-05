@@ -44,7 +44,7 @@ class LogActivity : MenuActivity() {
         setContentView(R.layout.activity_log)
         toolbar.title = "My List"
         setSupportActionBar(toolbar)
-        
+
         val button = findViewById<Button>(R.id.add_to_log)
         val listView = findViewById<ListView>(R.id.newLog)
 
@@ -79,7 +79,6 @@ class LogActivity : MenuActivity() {
         listView.adapter = adapter
         listView.dividerHeight = 3
 
-        //if the user clicks an item in the list view long enough, the item is removed
         listView.onItemLongClickListener = AdapterView.OnItemLongClickListener { parent, view, position, arg ->
             removeLog(position)
             adapter.notifyDataSetChanged()
@@ -93,7 +92,6 @@ class LogActivity : MenuActivity() {
      * @return true if stored in an editor object
      */
     private fun saveArray(): Boolean {
-        //enter key and mode(the file can only be accessed using calling app)
         val sp = this.getSharedPreferences(SHARED_PREFS_NAME, Activity.MODE_PRIVATE)
         val editor = sp.edit()
         val set = HashSet<String>()
@@ -114,7 +112,7 @@ class LogActivity : MenuActivity() {
      * This method adds a new experience or log (user input) to the ArrayList
      * @param newExp the experience/text entered
      */
-    fun addLog(newExp: String) {
+    private fun addLog(newExp: String) {
         var newExp = newExp
         //convert the UserLog object into string for the arrayList
         log = UserLog(newExp)
