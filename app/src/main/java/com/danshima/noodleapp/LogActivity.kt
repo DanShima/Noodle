@@ -13,8 +13,6 @@ import android.widget.ListView
 import android.widget.Toast
 import kotlinx.android.synthetic.main.toolbar_main.*
 import java.util.ArrayList
-import java.util.Collections
-import java.util.Comparator
 import java.util.HashSet
 
 /**
@@ -31,9 +29,7 @@ class LogActivity : MenuActivity() {
      * This method retrieves the data stored through SharedPreferences.
      * @return the stored ArrayList
      */
-    private//if shared preference is null, the method return empty Hashset and not null
-    //HashSet gives us an unsorted arraylist so we need to sort it again before returning it.
-    val array: ArrayList<String>
+    private val array: ArrayList<String>
         get() {
             val sp = this.getSharedPreferences(SHARED_PREFS_NAME, Activity.MODE_PRIVATE)
             val set = sp.getStringSet("list", HashSet())
@@ -48,8 +44,7 @@ class LogActivity : MenuActivity() {
         setContentView(R.layout.activity_log)
         toolbar.title = "My List"
         setSupportActionBar(toolbar)
-
-        //get references to layout widgets
+        
         val button = findViewById<Button>(R.id.add_to_log)
         val listView = findViewById<ListView>(R.id.newLog)
 

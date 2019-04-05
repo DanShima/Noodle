@@ -78,7 +78,6 @@ abstract class NoodleDatabase: RoomDatabase() {
     }
 
     companion object {
-        // For Singleton instantiation
         @Volatile private var instance: NoodleDatabase? = null
         private val sRoomDatabaseCallback = object : RoomDatabase.Callback() {
 
