@@ -84,7 +84,6 @@ obj/
 /out/
 
 # User-specific configurations
-.idea/*
 .idea/libraries/
 .idea/workspace.xml
 .idea/tasks.xml
@@ -104,6 +103,9 @@ obj/
 .idea/dynamic.xml
 .idea/uiDesigner.xml
 .idea/runConfigurations.xml
+.idea/kotlinScripting.xml
+.idea/workspace.xml
+.idea/assetWizardSettings.xml
 
 # OS-specific files
 .DS_Store
