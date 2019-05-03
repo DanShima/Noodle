@@ -9,7 +9,7 @@ import android.os.AsyncTask
 import com.danshima.noodleapp.R
 
 
-@Database(entities = [Noodle::class], version = 1, exportSchema = false)
+@Database(entities = [Noodle::class], version = 2, exportSchema = false)
 abstract class NoodleDatabase: RoomDatabase() {
     abstract fun noodleDao(): NoodleDao
 
@@ -78,28 +78,32 @@ abstract class NoodleDatabase: RoomDatabase() {
     }
 
     companion object {
-        @Volatile private var instance: NoodleDatabase? = null
+        @Volatile
+        private var INSTANCE: NoodleDatabase? = null
         private val sRoomDatabaseCallback = object : RoomDatabase.Callback() {
 
             override fun onOpen(db: SupportSQLiteDatabase) {
                 super.onOpen(db)
-                PopulateDbAsync(instance!!).execute()
+                PopulateDbAsync(INSTANCE!!).execute()
             }
         }
 
-        fun getDatabase(context: Context): NoodleDatabase? {
-            if (instance == null) {
-                synchronized(NoodleDatabase::class.java) {
-                    if (instance == null) {
-                        // Create database here
-                        instance = Room.databaseBuilder(context.applicationContext,
-                            NoodleDatabase::class.java, "noodle_database")
-                            .addCallback(sRoomDatabaseCallback)
-                            .build()
-                    }
-                }
+        fun getDatabase(context: Context): NoodleDatabase {
+
+            val tempInstance = INSTANCE
+            if (tempInstance != null) {
+                return tempInstance
             }
-            return instance
+            synchronized(this) {
+                val databaseInstance = Room.databaseBuilder(
+                        context.applicationContext,
+                        NoodleDatabase::class.java,
+                        "noodle_database")
+                        .addCallback(sRoomDatabaseCallback)
+                        .build()
+                INSTANCE = databaseInstance
+                return databaseInstance
+            }
         }
     }
 }
