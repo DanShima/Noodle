@@ -2,16 +2,13 @@
 
 buildscript {
 
-    var kotlin_version: String by extra
-    kotlin_version = "1.3.21"
     repositories {
         google()
         jcenter()
     }
     dependencies {
-        classpath("com.android.tools.build:gradle:3.3.2")
-        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:1.3.21")
-//       classpath(kotlinModule("gradle-plugin", kotlin_version))
+        classpath("com.android.tools.build:gradle:3.4.0")
+        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:1.3.31")
     }
 }
 

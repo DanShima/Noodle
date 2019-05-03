@@ -10,14 +10,13 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.danshima.noodleapp.data.Noodle
+import com.danshima.noodleapp.utils.NotifyChangeUtil
 import kotlinx.android.synthetic.main.recyclerview_item.view.*
 import kotlin.properties.Delegates
 
 typealias ClickListener = (Int) -> Unit
 
-class NoodleListAdapter(private val onClickListener: ClickListener) :
-    RecyclerView.Adapter<NoodleListAdapter.NoodleViewHolder>(),
-    NotifyChangeUtil {
+class NoodleListAdapter(private val onClickListener: ClickListener) : RecyclerView.Adapter<NoodleListAdapter.NoodleViewHolder>(), NotifyChangeUtil {
     private lateinit var context: Context
 
     var noodles: List<Noodle> by Delegates.observable(emptyList()) { prop, oldList, newList -> //notify every time the list changes
@@ -64,23 +63,3 @@ class NoodleListAdapter(private val onClickListener: ClickListener) :
 }
 
 
-interface NotifyChangeUtil {
-    fun <T> RecyclerView.Adapter<*>.notifyListChanges(oldList: List<T>, newList: List<T>, compare: (T, T) -> Boolean) {
-        val diff = DiffUtil.calculateDiff(object : DiffUtil.Callback() {
-
-            override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
-                return compare(oldList[oldItemPosition], newList[newItemPosition])
-            }
-
-            override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
-                return oldList[oldItemPosition] == newList[newItemPosition]
-            }
-
-            override fun getOldListSize() = oldList.size
-
-            override fun getNewListSize() = newList.size
-        })
-
-        diff.dispatchUpdatesTo(this)
-    }
-}

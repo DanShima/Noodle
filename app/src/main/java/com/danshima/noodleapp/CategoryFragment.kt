@@ -33,7 +33,7 @@ class CategoryFragment : androidx.fragment.app.Fragment() {
         super.onCreate(savedInstanceState)
         viewmodel = ViewModelProviders.of(this).get(NoodleViewModel::class.java)
         viewmodel.getAllNoodles().observe(this, Observer<List<Noodle>> {
-            listAdapter.setNoodles(it)
+            listAdapter.noodles = it
         })
     }
 
