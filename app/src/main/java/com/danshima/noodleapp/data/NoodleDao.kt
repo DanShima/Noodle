@@ -5,13 +5,12 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy.REPLACE
 import androidx.room.Query
+import androidx.room.Update
 
-/**
- * The Data Access Object for the Noodle class.
- */
+
 @Dao
 interface NoodleDao {
-    @Query("SELECT * FROM noodles ORDER BY name")
+    @Query("SELECT * FROM noodles ORDER BY name desc")
     fun getNoodles(): LiveData<List<Noodle>>
 
     @Query("SELECT * FROM noodles WHERE categoryNumber = :categoryNumber ORDER BY name")
@@ -22,6 +21,9 @@ interface NoodleDao {
 
     @Insert
     fun insert(noodle: Noodle)
+
+    @Update
+    suspend fun update(noodle: Noodle)
 
     @Insert(onConflict = REPLACE)
     fun insertAll(noodles: List<Noodle>)

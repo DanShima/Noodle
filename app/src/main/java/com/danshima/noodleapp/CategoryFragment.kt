@@ -24,7 +24,6 @@ import kotlinx.android.synthetic.main.fragment_category.*
  * A subclass displayed in the main page that shows a list of noodle per category.
  */
 class CategoryFragment : androidx.fragment.app.Fragment() {
-    private lateinit var cursor: Cursor
     private lateinit var database: SQLiteDatabase
     private lateinit var viewmodel: NoodleViewModel
     private lateinit var listAdapter: NoodleListAdapter
@@ -70,7 +69,6 @@ class CategoryFragment : androidx.fragment.app.Fragment() {
      */
     override fun onDestroy() {
         super.onDestroy()
-        cursor.close()
         database.close()
     }
 

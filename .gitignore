@@ -23,6 +23,8 @@ out/
 # Gradle files
 .gradle
 .gradle/
+.gradle/buildOutputCleanup/outputFiles.bin
+.gradle/buildOutputCleanup/buildOutputCleanup.lock
 build/
 .idea/gradle.xml
 .idea/workspace.xml

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#875a72</color>
-    <color name="colorPrimaryDark">#603f51</color>
-    <color name="colorAccent">#FF4081</color>
+    <!--<color name="colorPrimary">#875a72</color>-->
+    <!--<color name="colorPrimaryDark">#603f51</color>-->
+    <!--<color name="colorAccent">#FF4081</color>-->
     <color name="listView_background">#e3c8c7c8</color>
     <color name="listView_listSelector">#beac9da9</color>
     <color name="color_button">#9e8190</color>
@@ -12,9 +12,22 @@
     <color name="colorSecond">#feeae6</color>
     <color name="colorSurface">#fffbfa</color>
     <color name="colorBackground">#ffffff</color>
-    <color name="colorError">#c5032b</color>
+    <!--<color name="colorError">#c5032b</color>-->
     <color name="colorErrorText">#fffbfa</color>
     <color name="colorText">#442c2e</color>
+
+
+    <color name="colorPrimary">#FFAA3C</color>
+    <color name="colorPrimaryDark">#4A4F74</color>
+    <color name="colorAccent">#FA9A94</color>
+    <color name="colorWarning">#FFCC7C</color>
+
+    <color name="colorLightPink">#E2DEF0</color>
+    <color name="colorLightBlue">#B6CEE6</color>
+    <color name="colorBlue">#80979F</color>
+    <color name="colorBlack">#505050</color>
+    <color name="colorGrey">#AAAAAA</color>
+    <color name="colorError">#D26E5E</color>
 
 
 </resources>
